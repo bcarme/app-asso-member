@@ -10,5 +10,11 @@ import '../scss/app.scss';
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';
+const $ = require('jquery');
+// eslint-disable-next-line import/no-extraneous-dependencies
+require('bootstrap');
+// eslint-disable-next-line import/no-extraneous-dependencies
 
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+$(document).ready(() => {
+    $('[data-toggle="popover"]').popover();
+});
