@@ -1,2 +1,6 @@
-@import "~ bootstrap/scss/bootstrap";
-@import "_vars.scss";
+@import "~bootstrap";
+@import "partials/_vars";
+
+h1 {
+    color: $first-color
+}
