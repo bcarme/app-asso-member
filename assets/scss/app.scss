@@ -1,7 +1,12 @@
 @import "~bootstrap";
 @import "partials/_vars";
 @import "partials/_nav";
+@import "partials/_security";
+
+body {
+    background-color: $body-color;
+}
 
 h1 {
-    color: $first-color
+    color: $font-color;
 }

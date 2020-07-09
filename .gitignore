@@ -22,7 +22,12 @@ npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 .idea
-/Migrations/
+/migrations/
 public/uploads/
 /src/Controller/NavController.php
 /templates/nav/index.html.twig
+/src/Controller/TestController.php
+/templates/test/index.html.twig
+/src/Controller/HomepageController.php
+/templates/homepage/index.html.twig
+

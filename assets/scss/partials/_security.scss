@@ -1,0 +1,27 @@
+.s-heading {
+    border-bottom: solid 1px;
+    letter-spacing: 2px;
+}
+
+.s-form {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    background-color: $light-color;
+    box-shadow: 0 0 1rem $box-shadow;
+}
+
+.s-form .form-control {
+    border-radius: 0 !important;
+}
+
+.s-button {
+    border-radius: 0 !important;
+}
+
+label {
+    color: $font-color;
+}

@@ -1,0 +1,26 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Inscription
+{% endblock %}
+
+{% block body %}
+    <div class="s-form">
+        {% for flashError in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+        {% endfor %}
+
+        <h1 class="h3 mb-4 p-3 text-center s-heading">Créer un compte</h1>
+
+        {{ form_start(registrationForm) }}
+
+        {{ form_row(registrationForm.firstname) }}
+        {{ form_row(registrationForm.lastname) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.password.first) }}
+        {{ form_row(registrationForm.password.second) }}
+
+        <button type="submit" class="btn btn-lg btn-primary btn-block s-button"><i class="fa fa-user mr-2"></i>Inscription</button>
+
+        {{ form_end(registrationForm) }}
+    </div>
+{% endblock %}
