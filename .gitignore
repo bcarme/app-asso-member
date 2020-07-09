@@ -24,3 +24,5 @@ yarn-error.log
 .idea
 /Migrations/
 public/uploads/
+/src/Controller/NavController.php
+/templates/nav/index.html.twig

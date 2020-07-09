@@ -1,8 +1,12 @@
 {% extends "base.html.twig" %}
 
 {% block layout %}
-    {% block header %} {% endblock %}
-    <main>
-        {% block body %}{% endblock %}
-    </main>
+   <div class="row">
+        <header class="col-2">
+            {% block header %}{% include '_nav.html.twig' %}{% endblock %}
+        </header>
+        <main class="col-10"
+            {% block body %}{% endblock %}
+        </main>
+    </div>
 {% endblock %}
