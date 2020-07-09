@@ -4,13 +4,23 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="Il existe déjà un compte avec cet email")
  */
 class User implements UserInterface
 {
+    public const ROLE_USER = 'ROLE_USER';
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
+
+    public function __construct()
+    {
+        $this->roles = [self::ROLE_USER];
+    }
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -20,6 +30,11 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(message="L'adresse mail est obligatoire")
+     * @Assert\Length(
+     *      max = 180,
+     *      maxMessage = "Votre adresse mail ne doit pas dépasser {{ limit }} caractères")
+     * @Assert\Email(message="Format d'adresse invalide")
      */
     private $email;
 
@@ -36,11 +51,19 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le prénom est obligatoire")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "Votre prénom ne doit pas dépasser {{ limit }} caractères de long")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le nom est obligatoire")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "Votre nom ne doit pas dépasser {{ limit }} caractères de long")
      */
     private $lastname;
 
