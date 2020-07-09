@@ -26,3 +26,5 @@ yarn-error.log
 public/uploads/
 /src/Controller/TestController.php
 /templates/test/index.html.twig
+/src/Controller/HomepageController.php
+/templates/homepage/index.html.twig
