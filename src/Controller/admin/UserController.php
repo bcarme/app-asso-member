@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\admin;
 
 use App\Entity\User;
 use App\Form\UserType;
@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/utilisateur")
+ * @IsGranted("ROLE_ADMIN")
  */
 class UserController extends AbstractController
 {
@@ -21,7 +22,7 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $userRepository): Response
     {
-        return $this->render('user/index.html.twig', [
+        return $this->render('admin/user/index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
     }
@@ -43,7 +44,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_index');
         }
 
-        return $this->render('user/new.html.twig', [
+        return $this->render('admin/user/new.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
@@ -54,10 +55,7 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN','ROLE_USER');
-        $user = $this->getUser();
-
-        return $this->render('user/show.html.twig', [
+        return $this->render('admin/user/show.html.twig', [
             'user' => $user,
         ]);
     }
@@ -77,7 +75,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_edit', ['id' => $user->getId()]);
         }
 
-        return $this->render('user/edit.html.twig', [
+        return $this->render('admin/user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
@@ -94,6 +92,6 @@ class UserController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('user_index');
     }
 }
