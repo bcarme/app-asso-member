@@ -97,7 +97,7 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_edit', ['id' => $user->getId()]);
+            return $this->redirectToRoute('app_account', ['id' => $user->getId()]);
         }
 
         return $this->render('security/account.html.twig', [
