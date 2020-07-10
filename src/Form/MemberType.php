@@ -30,7 +30,7 @@ class MemberType extends AbstractType
                 'label' => 'Date de naissance',
                 'format' => 'ddMMMMyyyy',
             ])
-            ->add('phone', NumberType::class, [
+            ->add('phone', TextType::class, [
                 'label' => 'Téléphone',
             ])
             ->add('address', TextType::class, [
