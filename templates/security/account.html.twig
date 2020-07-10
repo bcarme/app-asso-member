@@ -1,0 +1,21 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Mon compte
+{% endblock %}
+
+{% block body %}
+    <div class="m-5">
+        <h1 class="m-4">Mon compte</h1>
+        <div class="col-8 m-4">
+            <h2 class="mb-4">Vos informations personnelles</h2>
+            {{ form_start(form) }}
+            {{ form_row(form.firstname) }}
+            {{ form_row(form.lastname) }}
+            {{ form_row(form.email) }}
+            <button class="btn btn-primary mt-2"><i class="fas fa-user-edit mr-2"></i>Modifier vos informations</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -4,11 +4,16 @@
             {% if app.user %}
                 <li>
                     <i class="fa fa-user fa-2x fa-fw text-white"></i>
-                    <a class="text-white">{{ app.user.firstname }} {{ app.user.lastname }}</a>
+                    <a href="" class="text-white">{{ app.user.firstname }} {{ app.user.lastname }}</a>
                 </li>
-
+                <li>
+                    <a href="{{ path('app_account', {'id': app.user.id}) }}">Mon compte</a>
+                </li>
                 <li>
                     <a href="{{ path('app_logout') }}">Déconnexion</a>
+                </li>
+                <li>
+                    <a class="badge badge-danger text-white">Statut pas à jour</a>
                 </li>
             {% else %}
                 <li>
@@ -17,23 +22,21 @@
                 </li>
                 <li>
                     <a href="{{ path('app_register') }}">
-                        <i class="fa fa-user text-white mr-2"></i>créer un compte</a>
-                </li>
+                        <i class="fa fa-user text-white mr-2"></i>Créer un compte</a>
+                </li>  
             {% endif %}
-            <li>
-                <a class="badge badge-danger text-white">Statut pas à jour</a>
-                <div></li>
-            </div>
         </ul>
-        <div class="secondPart">
-            <ul>
-                <li><a href="#">Fiche adhérent</a></li>
-                <li><a href="#">Mon compte</a></li>
-                <li><a href="#">Mes créneaux</a></li>
-                <li><a href="#">Mes documents</a></li>
-                <li><a href="#">Mes messages</a></li>
-                <li><a href="#">Planning du club</a></li>
-                <li><a href="#">Trombinoscope</a></li>
-            </ul>
-        </div>
+    </div>
+        {% if app.user %}
+            <div class="secondPart">
+                <ul>
+                    <li><a href="#">Fiche adhérent</a></li>
+                    <li><a href="#">Mes créneaux</a></li>
+                    <li><a href="#">Mes documents</a></li>
+                    <li><a href="#">Mes messages</a></li>
+                    <li><a href="#">Planning du club</a></li>
+                    <li><a href="#">Trombinoscope</a></li>
+                </ul>
+            </div>
+        {% endif %}
     </nav>
