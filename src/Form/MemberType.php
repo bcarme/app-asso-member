@@ -28,6 +28,7 @@ class MemberType extends AbstractType
             ])
             ->add('dateOfBirth', BirthdayType::class, [
                 'label' => 'Date de naissance',
+                'format' => 'ddMMMMyyyy',
             ])
             ->add('phone', NumberType::class, [
                 'label' => 'Téléphone',

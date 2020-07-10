@@ -2,6 +2,7 @@
 @import "partials/_vars";
 @import "partials/_nav";
 @import "partials/_security";
+@import "partials/_member_form";
 
 body {
     background-color: $body-color;
@@ -9,4 +10,5 @@ body {
 
 h1 {
     color: $font-color;
+    font-size: 2em;
 }
