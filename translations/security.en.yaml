@@ -1,2 +1,4 @@
 'Invalid credentials.': 'Mot de passe incorrect'
 'Email could not be found.': 'Email non valide'
+'This value is not valid': 'Format invalide'
+'This value is too short. It should have 5 characters or more.': 'Il faut au minimum 5 chiffres'

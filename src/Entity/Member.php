@@ -7,11 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\MemberRepository;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=MemberRepository::class)
+ * @UniqueEntity(fields={"email"}, message="Il existe déjà un compte avec cet email")
  * @Vich\Uploadable
  */
 class Member
@@ -25,16 +29,26 @@ class Member
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le prénom est obligatoire")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "Votre prénom ne doit pas dépasser {{ limit }} caractères de long")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le nom est obligatoire")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "Votre nom ne doit pas dépasser {{ limit }} caractères de long")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="L'adresse mail est obligatoire")
+     * @Assert\Email(message="Format d'adresse invalide")
      */
     private $email;
 
@@ -44,22 +58,36 @@ class Member
     private $dateOfBirth;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=20)
+     * @Assert\Length(min = 8, max = 20)
+     * @Assert\Regex(pattern="/^[0-9]*$/", message="Il faut des numéros uniquement") 
+     * @Assert\NotBlank(message="Le numéro de téléphone est obligatoire")
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="L'adresse est obligatoire")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "Votre adresse ne doit pas dépasser {{ limit }} caractères de long")
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="La ville est obligatoire")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "Votre ville ne doit pas dépasser {{ limit }} caractères de long")
      */
     private $town;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Length(min = 2, max = 10)
+     * @Assert\Regex(pattern="/^[0-9]*$/", message="Il faut des chiffres uniquement") 
+     * @Assert\NotBlank(message="Le code postal est obligatoire")
      */
     private $cityCode;
 
@@ -165,10 +193,12 @@ class Member
     }
 
     /**
-     * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     * 
-     * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName", size="imageSize")
-     * 
+     * @Vich\UploadableField(mapping="uploads_images", fileNameProperty="imageName")
+     * @Assert\File(
+     *     maxSize = "500k",
+     *     mimeTypes = {"image/jpeg", "image/JPEG", "image/png", "image/PNG", "image/jpg", "image/JPG"},
+     *     mimeTypesMessage = "Seuls les formats JEPG, JPG et PNG sont acceptés"
+     * )
      * @var File|null
      */
     private $imageFile;
@@ -179,13 +209,6 @@ class Member
      * @var string|null
      */
     private $imageName;
-
-    /**
-     * @ORM\Column(type="integer")
-     *
-     * @var int|null
-     */
-    private $imageSize;
 
     /**
      * @ORM\Column(type="datetime")
@@ -256,16 +279,6 @@ class Member
         return $this->imageName;
     }
     
-    public function setImageSize(?int $imageSize): void
-    {
-        $this->imageSize = $imageSize;
-    }
-
-    public function getImageSize(): ?int
-    {
-        return $this->imageSize;
-    }
-
     public function getOnlineForm(): ?OnlineForm
     {
         return $this->onlineForm;
