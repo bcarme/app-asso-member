@@ -23,11 +23,10 @@
         <tbody>
         {% for member in members %}
             <tr>
-                <td>{{ member.id }}</td>
                 <td>{{ member.firstname }}</td>
                 <td>{{ member.lastname }}</td>
                 <td>{{ member.email }}</td>
-                <td>{{ member.dateOfBirth ? member.dateOfBirth|date('Y-m-d') : '' }}</td>
+                <td>{{ member.dateOfBirth ? member.dateOfBirth|date('d-m-Y') : '' }}</td>
                 <td>{{ member.phone }}</td>
                 <td>{{ member.address }}</td>
                 <td>{{ member.town }}</td>

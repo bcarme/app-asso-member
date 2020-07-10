@@ -58,8 +58,8 @@ class Member
     private $dateOfBirth;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\Length(min = 10, max = 20)
+     * @ORM\Column(type="string", length=20)
+     * @Assert\Length(min = 8, max = 20)
      * @Assert\Regex(pattern="/^[0-9]*$/", message="Il faut des numéros uniquement") 
      * @Assert\NotBlank(message="Le numéro de téléphone est obligatoire")
      */
@@ -85,7 +85,7 @@ class Member
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\Length(min = 5, max = 10)
+     * @Assert\Length(min = 2, max = 10)
      * @Assert\Regex(pattern="/^[0-9]*$/", message="Il faut des chiffres uniquement") 
      * @Assert\NotBlank(message="Le code postal est obligatoire")
      */
@@ -211,13 +211,6 @@ class Member
     private $imageName;
 
     /**
-     * @ORM\Column(type="integer")
-     *
-     * @var int|null
-     */
-    private $imageSize;
-
-    /**
      * @ORM\Column(type="datetime")
      *
      * @var Datetime
@@ -286,16 +279,6 @@ class Member
         return $this->imageName;
     }
     
-    public function setImageSize(?int $imageSize): void
-    {
-        $this->imageSize = $imageSize;
-    }
-
-    public function getImageSize(): ?int
-    {
-        return $this->imageSize;
-    }
-
     public function getOnlineForm(): ?OnlineForm
     {
         return $this->onlineForm;
