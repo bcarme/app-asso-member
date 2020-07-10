@@ -1,0 +1,18 @@
+label {
+font-family:$text-font;
+font-size: 18px !important;
+}
+
+.custom-file-label:lang(fr)::after {
+    content: 'Parcourir';
+}
+
+
+#displayVich {
+    position: absolute;
+    z-index: 2;
+    display: inline-block;
+    padding:46px 0 0 10px;
+    cursor: pointer;
+    font-family: $text-font;
+}
