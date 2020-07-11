@@ -1,0 +1,43 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Index Utilisateurs{% endblock %}
+
+{% block body %}
+<div class="container-fluid p-5">
+    <h1>Index Utilisateurs</h1>
+<div class="col-lg-10 pt-3 pb-3">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Rôles</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.email }}</td>
+                {# <td>{{ user.roles ? user.roles|json_encode : '' }}</td> #}
+                <td>{% for role in user.roles %}
+                    {{ role }}
+                {% endfor %}</td>
+                <td>
+                    <a href="{{ path('user_edit', {'id': user.id}) }}">Attribuer rôle</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+    <a href="{{ path('user_new') }}">Create new</a>
+    </div>
+{% endblock %}

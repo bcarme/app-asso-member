@@ -17,6 +17,8 @@ class User implements UserInterface
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
 
+    const ROLES = ['utilisateur' => self::ROLE_USER, 'administrateur' => self::ROLE_ADMIN];
+
     public function __construct()
     {
         $this->roles = [self::ROLE_USER];

@@ -1,0 +1,52 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Liste des utilisateurs
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid p-5">
+        <h1 class="mb-3">Liste des utilisateurs</h1>
+        <p>Le rôle utilisateur est attribué par défaut.</p>
+        <div class="col-lg-10 pt-3">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Prénom</th>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Rôles</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.firstname }}</td>
+                            <td>{{ user.lastname }}</td>
+                            <td>{{ user.email }}</td>
+                            {# <td>{{ user.roles ? user.roles|json_encode : '' }}</td> #}
+                            <td>
+                                {% for role in user.roles %}
+                                    {% if role == "ROLE_USER" %}
+                                        Utilisateur
+                                    {% elseif role == "ROLE_ADMIN" %}
+                                        Administrateur
+                                    {% elseif role == "ROLE_SUPER_ADMIN" %}
+                                        SUPER Administrateur
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-warning">Attribuer rôle</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7">no records found</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
