@@ -4,7 +4,8 @@
             {% if app.user %}
                 <li>
                     <i class="fa fa-user fa-2x fa-fw text-white"></i>
-                    <a href="" class="text-white">{{ app.user.firstname }} {{ app.user.lastname }}</a>
+                    <a href="" class="text-white">{{ app.user.firstname }}
+                        {{ app.user.lastname }}</a>
                 </li>
                 <li>
                     <a href="{{ path('app_account', {'id': app.user.id}) }}">Mon compte</a>
@@ -18,25 +19,41 @@
             {% else %}
                 <li>
                     <a href="{{ path('app_login') }}">
-                        <i class="fas fa-sign-in-alt mr-2"></i></i>Se connecter</a>
-                </li>
-                <li>
-                    <a href="{{ path('app_register') }}">
-                        <i class="fa fa-user text-white mr-2"></i>Créer un compte</a>
-                </li>  
-            {% endif %}
-        </ul>
-    </div>
-        {% if app.user %}
-            <div class="secondPart">
-                <ul>
-                    <li><a href="#">Fiche adhérent</a></li>
-                    <li><a href="#">Mes créneaux</a></li>
-                    <li><a href="#">Mes documents</a></li>
-                    <li><a href="#">Mes messages</a></li>
-                    <li><a href="#">Planning du club</a></li>
-                    <li><a href="#">Trombinoscope</a></li>
-                </ul>
-            </div>
+                        <i class="fas fa-sign-in-alt mr-2"></i>
+                    </i>Se connecter</a>
+            </li>
+            <li>
+                <a href="{{ path('app_register') }}">
+                    <i class="fa fa-user text-white mr-2"></i>Créer un compte</a>
+            </li>
         {% endif %}
-    </nav>
+    </ul>
+</div>
+<div class="admin">
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <ul class="">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                    <span class="nav-label">admin</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="{{ path('admin_user' ) }}">Utilisateurs</a</li>
+                    </ul>
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+    <div class="secondPart">
+        {% if app.user %}
+            <ul>
+                <li><a href="#">Fiche adhérent</a></li>
+                <li><a href="#">Mes créneaux</a></li>
+                <li><a href="#">Mes documents</a></li>
+                <li><a href="#">Mes messages</a></li>
+                <li><a href="#">Planning du club</a></li>
+                <li><a href="#">Trombinoscope</a></li>
+            </ul>
+        {% endif %}
+    </div>
+</nav>
