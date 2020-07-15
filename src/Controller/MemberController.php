@@ -9,9 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
  * @Route("/fiche-adherent")
+ * @IsGranted("ROLE_USER")
  */
 class MemberController extends AbstractController
 {
@@ -36,6 +37,7 @@ class MemberController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $member->setUser($this->getUser());
             $entityManager->persist($member);
             $entityManager->flush();
 
