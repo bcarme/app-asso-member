@@ -55,6 +55,8 @@ class MemberController extends AbstractController
      */
     public function show(Member $member): Response
     {
+        $this->denyAccessUnlessGranted('SHOW', $member);
+
         return $this->render('member/show.html.twig', [
             'member' => $member,
         ]);
@@ -65,6 +67,8 @@ class MemberController extends AbstractController
      */
     public function edit(Request $request, Member $member): Response
     {
+        $this->denyAccessUnlessGranted('EDIT', $member);
+
         $form = $this->createForm(MemberType::class, $member);
         $form->handleRequest($request);
 
@@ -85,6 +89,8 @@ class MemberController extends AbstractController
      */
     public function delete(Request $request, Member $member): Response
     {
+        $this->denyAccessUnlessGranted('DELETE', $member);
+
         if ($this->isCsrfTokenValid('delete'.$member->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($member);
