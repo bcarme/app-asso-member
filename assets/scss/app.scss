@@ -3,6 +3,7 @@
 @import "partials/_nav";
 @import "partials/_security";
 @import "partials/_member_form";
+@import "partials/_calendar";
 
 body {
     background-color: $body-color;
@@ -12,3 +13,5 @@ h1 {
     color: $font-color;
     font-size: 2em;
 }
+
+

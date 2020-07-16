@@ -1,0 +1,38 @@
+
+.fc-time, .fc-time-grid-event{
+    font-size: 16px !important;
+    padding-left: 8px;;
+}
+
+.fc-title{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.fc-axis, .fc-time, .fc-widget-content{
+padding-left: 10px;
+}
+
+.fc-today {
+    background-color: #e6e6e6 !important;
+    border: none !important;
+    font-weight: bold;
+} 
+
+.fc-ltr .fc-axis, .fc-time {
+    text-align:left !important;
+}
+.fc-button-primary{
+    background-color:$first-color !important;
+}
+
+.fc-today-button, .fc-button-active {
+    background-color:$first-color !important;
+    opacity: 65% !important;
+}
+
+.fc-day-header, .fc-widget-header {
+    font-size: 18px;
+    background-color: #e6e6e6;
+    padding: 10px;
+}
