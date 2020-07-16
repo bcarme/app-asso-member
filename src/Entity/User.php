@@ -4,10 +4,11 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"email"}, message="Il existe déjà un compte avec cet email")
@@ -22,6 +23,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->roles = [self::ROLE_USER];
+        $this->members = new ArrayCollection();
     }
     /**
      * @ORM\Id()
@@ -68,6 +70,11 @@ class User implements UserInterface
      *      maxMessage = "Votre nom ne doit pas dépasser {{ limit }} caractères de long")
      */
     private $lastname;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Member::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $members;
 
     public function getId(): ?int
     {
@@ -167,6 +174,37 @@ class User implements UserInterface
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Member[]
+     */
+    public function getMembers(): Collection
+    {
+        return $this->members;
+    }
+
+    public function addMember(Member $member): self
+    {
+        if (!$this->members->contains($member)) {
+            $this->members[] = $member;
+            $member->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMember(Member $member): self
+    {
+        if ($this->members->contains($member)) {
+            $this->members->removeElement($member);
+            // set the owning side to null (unless already changed)
+            if ($member->getUser() === $this) {
+                $member->setUser(null);
+            }
+        }
 
         return $this;
     }

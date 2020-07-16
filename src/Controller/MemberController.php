@@ -9,9 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
  * @Route("/fiche-adherent")
+ * @IsGranted("ROLE_USER")
  */
 class MemberController extends AbstractController
 {
@@ -36,6 +37,7 @@ class MemberController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $member->setUser($this->getUser());
             $entityManager->persist($member);
             $entityManager->flush();
 
@@ -53,6 +55,8 @@ class MemberController extends AbstractController
      */
     public function show(Member $member): Response
     {
+        $this->denyAccessUnlessGranted('SHOW', $member);
+
         return $this->render('member/show.html.twig', [
             'member' => $member,
         ]);
@@ -63,6 +67,8 @@ class MemberController extends AbstractController
      */
     public function edit(Request $request, Member $member): Response
     {
+        $this->denyAccessUnlessGranted('EDIT', $member);
+
         $form = $this->createForm(MemberType::class, $member);
         $form->handleRequest($request);
 
@@ -83,6 +89,8 @@ class MemberController extends AbstractController
      */
     public function delete(Request $request, Member $member): Response
     {
+        $this->denyAccessUnlessGranted('DELETE', $member);
+
         if ($this->isCsrfTokenValid('delete'.$member->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($member);

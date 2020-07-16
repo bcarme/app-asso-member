@@ -91,6 +91,12 @@ class Member
      */
     private $cityCode;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="members")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -386,6 +392,18 @@ class Member
                 $document->setMember(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
