@@ -11,12 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/booking")
+ * @Route("/planning")
  */
 class BookingController extends AbstractController
 {
     /**
-     * @Route("/calendar", name="booking_calendar", methods={"GET"})
+     * @Route("/calendrier", name="booking_calendar", methods={"GET"})
      */
     public function calendar(): Response
     {
@@ -24,7 +24,7 @@ class BookingController extends AbstractController
     }
 
     /**
-     * @Route("/", name="booking_index", methods={"GET"})
+     * @Route("/index", name="booking_index", methods={"GET"})
      */
     public function index(BookingRepository $bookingRepository): Response
     {
@@ -34,7 +34,7 @@ class BookingController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="booking_new", methods={"GET","POST"})
+     * @Route("/ajouter", name="booking_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -67,7 +67,7 @@ class BookingController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="booking_edit", methods={"GET","POST"})
+     * @Route("/{id}/editer", name="booking_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Booking $booking): Response
     {
