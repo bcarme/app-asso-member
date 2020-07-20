@@ -38,6 +38,11 @@ class Booking
      */
     private $members;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="booking")
+     */
+    private $location;
+
     public function __construct()
     {
         $this->members = new ArrayCollection();
@@ -111,6 +116,18 @@ class Booking
                 $member->setBooking(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLocation(): ?Location
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?Location $location): self
+    {
+        $this->location = $location;
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LocationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,16 @@ class Location
      * @ORM\Column(type="boolean")
      */
     private $isFull;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="location")
+     */
+    private $booking;
+
+    public function __construct()
+    {
+        $this->booking = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +98,37 @@ class Location
     public function setIsFull(bool $isFull): self
     {
         $this->isFull = $isFull;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Booking[]
+     */
+    public function getBooking(): Collection
+    {
+        return $this->booking;
+    }
+
+    public function addBooking(Booking $booking): self
+    {
+        if (!$this->booking->contains($booking)) {
+            $this->booking[] = $booking;
+            $booking->setLocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): self
+    {
+        if ($this->booking->contains($booking)) {
+            $this->booking->removeElement($booking);
+            // set the owning side to null (unless already changed)
+            if ($booking->getLocation() === $this) {
+                $booking->setLocation(null);
+            }
+        }
 
         return $this;
     }
