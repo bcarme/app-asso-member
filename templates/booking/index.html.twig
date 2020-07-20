@@ -1,39 +1,40 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Booking index{% endblock %}
+{% block title %}Liste des événements{% endblock %}
 
 {% block body %}
-    <h1>Booking index</h1>
-
-    <table class="table">
-        <thead>
+<div class="container-fluid p-5">
+    <h1>Liste des événements</h1>
+    <a href="{{ path('booking_new') }}" class ="btn btn-primary mb-4">Ajouter<i class="fas fa-plus ml-2"></i></a>
+       <table class="table table-striped mt-5">
+        <thead class="thead-dark">
             <tr>
-                <th>Id</th>
-                <th>BeginAt</th>
-                <th>EndAt</th>
-                <th>Title</th>
-                <th>actions</th>
+                <th>Début</th>
+                <th>Fin</th>
+                <th>Titre</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for booking in bookings %}
             <tr>
-                <td>{{ booking.id }}</td>
-                <td>{{ booking.beginAt ? booking.beginAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ booking.endAt ? booking.endAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ booking.beginAt ? booking.beginAt|date('d/m/Y H:i') : '' }}</td>
+                <td>{{ booking.endAt ? booking.endAt|date('d/m/Y H:i') : '' }}</td>
                 <td>{{ booking.title }}</td>
-                <td>
-                    <a href="{{ path('booking_show', {'id': booking.id}) }}">show</a>
-                    <a href="{{ path('booking_edit', {'id': booking.id}) }}">edit</a>
+                <td class="d-flex pt-3">
+                    <a href="{{ path('booking_edit', {'id': booking.id}) }}" class="btn btn-success mr-4">Éditer<i
+                                class="fas fa-pen ml-1"></i></a>
+                    <div>
+                        {{ include('booking/_delete_form.html.twig') }}
+                    </div>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">aucun événement trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('booking_new') }}">Create new</a>
+    </div>
 {% endblock %}
