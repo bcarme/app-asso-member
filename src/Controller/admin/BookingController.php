@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\admin;
 
 use App\Entity\Booking;
 use App\Form\BookingType;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/planning")
+ * @Route("admin/planning")
  */
 class BookingController extends AbstractController
 {
@@ -21,7 +21,7 @@ class BookingController extends AbstractController
      */
     public function index(BookingRepository $bookingRepository): Response
     {
-        return $this->render('booking/index.html.twig', [
+        return $this->render('admin/booking/index.html.twig', [
             'bookings' => $bookingRepository->findAll(),
         ]);
     }
@@ -43,7 +43,7 @@ class BookingController extends AbstractController
             return $this->redirectToRoute('booking_index');
         }
 
-        return $this->render('booking/new.html.twig', [
+        return $this->render('admin/booking/new.html.twig', [
             'booking' => $booking,
             'form' => $form->createView(),
         ]);
@@ -54,7 +54,7 @@ class BookingController extends AbstractController
      */
     public function show(Booking $booking): Response
     {
-        return $this->render('booking/show.html.twig', [
+        return $this->render('admin/booking/show.html.twig', [
             'booking' => $booking,
         ]);
     }
@@ -73,7 +73,7 @@ class BookingController extends AbstractController
             return $this->redirectToRoute('booking_index');
         }
 
-        return $this->render('booking/edit.html.twig', [
+        return $this->render('admin/booking/edit.html.twig', [
             'booking' => $booking,
             'form' => $form->createView(),
         ]);
