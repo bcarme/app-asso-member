@@ -243,6 +243,11 @@ class Member
      */
     private $documents;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Booking::class, inversedBy="members")
+     */
+    private $booking;
+
     public function __construct()
     {
         $this->giver = new ArrayCollection();
@@ -404,6 +409,18 @@ class Member
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getBooking(): ?Booking
+    {
+        return $this->booking;
+    }
+
+    public function setBooking(?Booking $booking): self
+    {
+        $this->booking = $booking;
 
         return $this;
     }
