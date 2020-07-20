@@ -148,4 +148,43 @@ class Booking
 
         return $this;
     }
+
+    /**
+     * @ORM\Column(type="integer", options={"default": 1})
+     */
+    private $capacity = 1;
+
+    public function getCapacity(): ?int
+    {
+        return $this->capacity;
+    }
+
+    public function setCapacity(int $capacity): self
+    {
+        $this->capacity = $capacity;
+
+        return $this;
+    }
+
+    /**
+     *
+     * The number of spots available for this event.
+     *
+     * @return int
+     */
+    public function spotsLeft(): int
+    {
+        return $this->capacity - ($this->members->count());
+    }
+
+    /**
+     *
+     * Check if there are no more spots left for this event.
+     *
+     * @return bool
+     */
+    public function isSoldOut(): bool
+    {
+        return $this->spotsLeft() <= 0;
+    }
 }
