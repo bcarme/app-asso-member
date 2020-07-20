@@ -43,6 +43,11 @@ class Booking
      */
     private $location;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="booking")
+     */
+    private $category;
+
     public function __construct()
     {
         $this->members = new ArrayCollection();
@@ -128,6 +133,18 @@ class Booking
     public function setLocation(?Location $location): self
     {
         $this->location = $location;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
