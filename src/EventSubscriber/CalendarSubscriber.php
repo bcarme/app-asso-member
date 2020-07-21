@@ -53,7 +53,7 @@ class CalendarSubscriber implements EventSubscriberInterface
              $bookingEvent = new Event(
                  $booking->getTitle(),
                  $booking->getBeginAt(),
-                 $booking->getEndAt() // If the end date is null or not defined, a all day event is created.
+                 $booking->getEndAt(), // If the end date is null or not defined, a all day event is created.
              );
 
              $bookingEvent->setOptions([
@@ -63,7 +63,7 @@ class CalendarSubscriber implements EventSubscriberInterface
              ]);
              $bookingEvent->addOption(
                  'url',
-                 $this->router->generate('booking_calendar', [
+                 $this->router->generate('app_calendar', [
                      'id' => $booking->getId(),
                  ])
              );
