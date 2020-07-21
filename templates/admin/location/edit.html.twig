@@ -1,13 +1,15 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Edit Location{% endblock %}
+{% block title %}Modifier le lieu{% endblock %}
 
 {% block body %}
-    <h1>Edit Location</h1>
-
-    {{ include('admin/location/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('location_index') }}">back to list</a>
-
-    {{ include('admin/location/_delete_form.html.twig') }}
+<div class="container-fluid p-5">
+    <h1>Modifier le lieu</h1>
+      <div class="mb-3">
+        <a href="{{ path('location_index') }}" class="btn btn-outline-dark mr-5">Retour à la liste</a>
+      </div>
+      <div class="mt-5">
+        {{ include('admin/location/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+      </div>
+ </div>
 {% endblock %}
