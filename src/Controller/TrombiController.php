@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TrombiController extends AbstractController
 {
     /**
-     * @Route("/trombinoscope", name="trombi")
+     * @Route("/trombinoscope", name="app_trombi")
      */
     public function index(MemberRepository $memberRepository)
     {
