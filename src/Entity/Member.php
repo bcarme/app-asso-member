@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
  * @ORM\Entity(repositoryClass=MemberRepository::class)
  * @UniqueEntity(fields={"email"}, message="Il existe déjà un compte avec cet email")
@@ -96,6 +95,115 @@ class Member
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @Vich\UploadableField(mapping="uploads_images", fileNameProperty="imageName")
+     * @Assert\File(
+     *     maxSize = "500k",
+     *     mimeTypes = {"image/jpeg", "image/JPEG", "image/png", "image/PNG", "image/jpg", "image/JPG"},
+     *     mimeTypesMessage = "Seuls les formats JEPG, JPG et PNG sont acceptés"
+     * )
+     * @var File|null
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string|null
+     */
+    private $imageName;
+
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var Datetime
+     */
+    private $updatedAt;
+
+    /**
+     * @ORM\OneToOne(targetEntity=OnlineForm::class, mappedBy="member", cascade={"persist", "remove"})
+     */
+    private $onlineForm;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Delegation::class, mappedBy="fromMember")
+     */
+    private $giver;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Delegation::class, mappedBy="toMember")
+     */
+    private $receiver;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Document::class, mappedBy="member")
+     */
+    private $documents;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Booking::class, inversedBy="members")
+     */
+    private $booking;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Registration::class, mappedBy="member")
+     */
+    private $registrations;
+
+
+    public function __construct()
+    {
+        $this->giver = new ArrayCollection();
+        $this->receiver = new ArrayCollection();
+        $this->documents = new ArrayCollection();
+        $this->registrations = new ArrayCollection();
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     */
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            $this->updatedAt = new DateTime('now');
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function getOnlineForm(): ?OnlineForm
+    {
+        return $this->onlineForm;
+    }
+
+    public function setOnlineForm(?OnlineForm $onlineForm): self
+    {
+        $this->onlineForm = $onlineForm;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newMember = null === $onlineForm ? null : $this;
+        if ($onlineForm->getMember() !== $newMember) {
+            $onlineForm->setMember($newMember);
+        }
+
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -198,112 +306,26 @@ class Member
         return $this;
     }
 
-    /**
-     * @Vich\UploadableField(mapping="uploads_images", fileNameProperty="imageName")
-     * @Assert\File(
-     *     maxSize = "500k",
-     *     mimeTypes = {"image/jpeg", "image/JPEG", "image/png", "image/PNG", "image/jpg", "image/JPG"},
-     *     mimeTypesMessage = "Seuls les formats JEPG, JPG et PNG sont acceptés"
-     * )
-     * @var File|null
-     */
-    private $imageFile;
-
-    /**
-     * @ORM\Column(type="string")
-     *
-     * @var string|null
-     */
-    private $imageName;
-
-    /**
-     * @ORM\Column(type="datetime")
-     *
-     * @var Datetime
-     */
-    private $updatedAt;
-
-    /**
-     * @ORM\OneToOne(targetEntity=OnlineForm::class, mappedBy="member", cascade={"persist", "remove"})
-     */
-    private $onlineForm;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Delegation::class, mappedBy="fromMember")
-     */
-    private $giver;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Delegation::class, mappedBy="toMember")
-     */
-    private $receiver;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Document::class, mappedBy="member")
-     */
-    private $documents;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Booking::class, inversedBy="members")
-     */
-    private $booking;
-
-    public function __construct()
+    public function getUser(): ?User
     {
-        $this->giver = new ArrayCollection();
-        $this->receiver = new ArrayCollection();
-        $this->documents = new ArrayCollection();
+        return $this->user;
     }
 
-    /**
-     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
-     * of 'UploadedFile' is injected into this setter to trigger the update. If this
-     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
-     * must be able to accept an instance of 'File' as the bundle will inject one here
-     * during Doctrine hydration.
-     *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
-     */
-    public function setImageFile(?File $imageFile = null): void
+    public function setUser(?User $user): self
     {
-        $this->imageFile = $imageFile;
+        $this->user = $user;
 
-        if (null !== $imageFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new DateTime('now');
-        }
+        return $this;
     }
 
-    public function getImageFile(): ?File
+    public function getBooking(): ?Booking
     {
-        return $this->imageFile;
+        return $this->booking;
     }
 
-    public function setImageName(?string $imageName): void
+    public function setBooking(?Booking $booking): self
     {
-        $this->imageName = $imageName;
-    }
-
-    public function getImageName(): ?string
-    {
-        return $this->imageName;
-    }
-    
-    public function getOnlineForm(): ?OnlineForm
-    {
-        return $this->onlineForm;
-    }
-
-    public function setOnlineForm(?OnlineForm $onlineForm): self
-    {
-        $this->onlineForm = $onlineForm;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newMember = null === $onlineForm ? null : $this;
-        if ($onlineForm->getMember() !== $newMember) {
-            $onlineForm->setMember($newMember);
-        }
+        $this->booking = $booking;
 
         return $this;
     }
@@ -400,28 +422,50 @@ class Member
 
         return $this;
     }
-
-    public function getUser(): ?User
+    
+    /**
+     * @return Collection|Registration[]
+     */
+    public function getRegistrations(): Collection
     {
-        return $this->user;
+        return $this->registrations;
     }
 
-    public function setUser(?User $user): self
+    public function addRegistration(Registration $registration): self
     {
-        $this->user = $user;
+        if (!$this->registrations->contains($registration)) {
+            $this->registrations[] = $registration;
+            $registration->setMember($this);
+        }
 
         return $this;
     }
 
-    public function getBooking(): ?Booking
+    public function removeRegistration(Registration $registration): self
     {
-        return $this->booking;
-    }
-
-    public function setBooking(?Booking $booking): self
-    {
-        $this->booking = $booking;
+        if ($this->registrations->contains($registration)) {
+            $this->registrations->removeElement($registration);
+            // set the owning side to null (unless already changed)
+            if ($registration->getMember() === $this) {
+                $registration->setMember(null);
+            }
+        }
 
         return $this;
+    }
+
+    /**
+     * Get the full username if first and last name are set,
+     * the firstname otherwise
+     *
+     * @return string
+     */
+    public function getFullname(): string
+    {
+        if ($this->firstname && $this->lastname) {
+            return $this->firstname . ' ' . $this->lastname;
+        }
+
+        return $this->firstname;
     }
 }

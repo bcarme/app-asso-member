@@ -34,11 +34,6 @@ class Booking
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity=Member::class, mappedBy="booking")
-     */
-    private $members;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="booking")
      */
     private $location;
@@ -50,7 +45,7 @@ class Booking
 
     public function __construct()
     {
-        $this->members = new ArrayCollection();
+        $this->registrations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,37 +89,6 @@ class Booking
         return $this;
     }
 
-    /**
-     * @return Collection|Member[]
-     */
-    public function getMembers(): Collection
-    {
-        return $this->members;
-    }
-
-    public function addMember(Member $member): self
-    {
-        if (!$this->members->contains($member)) {
-            $this->members[] = $member;
-            $member->setBooking($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMember(Member $member): self
-    {
-        if ($this->members->contains($member)) {
-            $this->members->removeElement($member);
-            // set the owning side to null (unless already changed)
-            if ($member->getBooking() === $this) {
-                $member->setBooking(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getLocation(): ?Location
     {
         return $this->location;
@@ -150,9 +114,14 @@ class Booking
     }
 
     /**
-     * @ORM\Column(type="integer", options={"default": 1})
+     * @ORM\Column(type="integer")
      */
-    private $capacity = 1;
+    private $capacity;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Registration::class, mappedBy="booking")
+     */
+    private $registrations;
 
     public function getCapacity(): ?int
     {
@@ -174,7 +143,7 @@ class Booking
      */
     public function spotsLeft(): int
     {
-        return $this->capacity - ($this->members->count());
+        return $this->capacity - ($this->registrations->count());
     }
 
     /**
@@ -186,5 +155,36 @@ class Booking
     public function isSoldOut(): bool
     {
         return $this->spotsLeft() <= 0;
+    }
+
+    /**
+     * @return Collection|Registration[]
+     */
+    public function getRegistrations(): Collection
+    {
+        return $this->registrations;
+    }
+
+    public function addRegistration(Registration $registration): self
+    {
+        if (!$this->registrations->contains($registration)) {
+            $this->registrations[] = $registration;
+            $registration->setBooking($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRegistration(Registration $registration): self
+    {
+        if ($this->registrations->contains($registration)) {
+            $this->registrations->removeElement($registration);
+            // set the owning side to null (unless already changed)
+            if ($registration->getBooking() === $this) {
+                $registration->setBooking(null);
+            }
+        }
+
+        return $this;
     }
 }

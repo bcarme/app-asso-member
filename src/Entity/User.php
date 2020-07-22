@@ -24,6 +24,7 @@ class User implements UserInterface
     {
         $this->roles = [self::ROLE_USER];
         $this->members = new ArrayCollection();
+        $this->registrations = new ArrayCollection();
     }
     /**
      * @ORM\Id()
@@ -75,6 +76,11 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity=Member::class, mappedBy="user", orphanRemoval=true)
      */
     private $members;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Registration::class, mappedBy="user")
+     */
+    private $registrations;
 
     public function getId(): ?int
     {
@@ -203,6 +209,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($member->getUser() === $this) {
                 $member->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Registration[]
+     */
+    public function getRegistrations(): Collection
+    {
+        return $this->registrations;
+    }
+
+    public function addRegistration(Registration $registration): self
+    {
+        if (!$this->registrations->contains($registration)) {
+            $this->registrations[] = $registration;
+            $registration->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRegistration(Registration $registration): self
+    {
+        if ($this->registrations->contains($registration)) {
+            $this->registrations->removeElement($registration);
+            // set the owning side to null (unless already changed)
+            if ($registration->getUser() === $this) {
+                $registration->setUser(null);
             }
         }
 
