@@ -1,0 +1,24 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Trombinoscope{% endblock %}
+
+{% block body %}
+  <div class="container-fluid p-5">
+    <h1 class="pb-5">Trombinoscope du club</h1>
+    <div class="container">
+{% for member in members %}
+    <div class="row border justify-content-start lineTrombi">
+      <div class="col-2">
+        <img class="imgTrombi" src="{{ vich_uploader_asset(member, 'imageFile') }}" alt="card image">
+      </div>
+      <div class="col-4">
+        <h5 class="font-weight-bold pt-5 pl-5">{{member.lastname |upper }} {{member.firstname |capitalize }} </h5>
+      </div>
+      <div class="col-6 d-flex justify-content-end align-items-center">
+        <i class="fas fa-envelope fa-3x pr-5"></i>
+      </div>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}
