@@ -4,9 +4,14 @@
 
 {% block body %}
   <div class="container-fluid p-5">
-    <h1 class="pb-5">Trombinoscope du club</h1>
+    <h1 class="pb-3">Trombinoscope du club</h1>
     <div class="container">
-{% for member in members %}
+      {{ form_start(form) }}
+      {{ form_widget(form, { 'attr': {'class': 'searchBar '}  }) }}
+      {{ form_end(form) }}
+    </div>
+  <div class="container pt-3">
+ {% for member in members|sort|reverse %}
     <div class="row border justify-content-start lineTrombi">
       <div class="col-2">
         <img class="imgTrombi" src="{{ vich_uploader_asset(member, 'imageFile') }}" alt="card image">
@@ -18,7 +23,14 @@
         <i class="fas fa-envelope fa-3x pr-5"></i>
       </div>
     </div>
-    {% endfor %}
-    </div>
+            {% else %}
+            <p class"pb-5">résultat non trouvé</p>
+            <a href="{{ path('app_trombi') }}" class="btn btn-outline-secondary">Retour</a>
+      {% endfor %}
+       </div>
 </div>
+</div>
+           <div class="p-5">
+             {{ knp_pagination_render(members) }}
+           </div>
 {% endblock %}
