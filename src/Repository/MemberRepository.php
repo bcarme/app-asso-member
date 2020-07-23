@@ -30,15 +30,16 @@ class MemberRepository extends ServiceEntityRepository
     }
 
 
-    /*
-    public function findOneBySomeField($value): ?Member
+    
+    public function findByName($search)
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $qb = $this->createQueryBuilder('m')
+       // ->select('m.firstname, m.lastname')
+        ->where('m.firstname LIKE :search OR m.lastname LIKE :search')
+        ->setParameter('search',  '%' . $search .'%')
+        ->getQuery();
+        return $qb->execute();
+        
     }
-    */
+    
 }
