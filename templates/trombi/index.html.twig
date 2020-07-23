@@ -27,10 +27,10 @@
             <p class"pb-5">résultat non trouvé</p>
             <a href="{{ path('app_trombi') }}" class="btn btn-outline-secondary">Retour</a>
       {% endfor %}
-
-    </div>
+       </div>
 </div>
+</div>
+           <div class="p-5">
+             {{ knp_pagination_render(members) }}
+           </div>
 {% endblock %}
-        {% block javascripts %}
-$(".myform")[0].reset();
-        {% endblock %}
