@@ -32,12 +32,12 @@ class Location
     /**
      * @ORM\Column(type="integer")
      */
-    private $capacity;
+    private $zipcode;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string")
      */
-    private $isFull;
+    private $city;
 
     /**
      * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="location")
@@ -78,26 +78,26 @@ class Location
         return $this;
     }
 
-    public function getCapacity(): ?int
+    public function getZipcode(): ?int
     {
-        return $this->capacity;
+        return $this->zipcode;
     }
 
-    public function setCapacity(int $capacity): self
+    public function setZipcode(int $zipcode): self
     {
-        $this->capacity = $capacity;
+        $this->zipcode = $zipcode;
 
         return $this;
     }
 
-    public function getIsFull(): ?bool
+    public function getCity(): ?string
     {
-        return $this->isFull;
+        return $this->city;
     }
 
-    public function setIsFull(bool $isFull): self
+    public function setCity(string $city): self
     {
-        $this->isFull = $isFull;
+        $this->city = $city;
 
         return $this;
     }

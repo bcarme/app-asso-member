@@ -1,0 +1,16 @@
+.lineTrombi{
+  background-color: white;
+  margin:4px;
+}
+
+.imgTrombi{
+    height:100px;
+    Width:100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin:10px;
+}
+
+.fa-envelope:hover{
+    color:$second-color;
+}
