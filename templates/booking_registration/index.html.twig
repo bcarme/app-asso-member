@@ -1,0 +1,27 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Hello Booking Registration!
+{% endblock %}
+
+{% block body %}
+    <h1>Liste des events</h1>
+    <h2>Vous pouvez réserver un event si il n'est pas complet</h2>
+    {% for booking in bookings %}
+        <div>{{ booking.title }}</div>
+        <div>{{ booking.beginAt ? booking.beginAt|date('d/m/Y H:i') : '' }}</div>
+
+        {% if booking.isSoldOut %}
+            <span class="badge badge-warning text-uppercase">C'est complet complet</span>
+        {% else %}
+            <div>places dispo:
+                {{ booking.spotsleft }}</div>
+            <li class="d-flex pt-3">
+                <a href="{{ path('booking_registration_register', {'id': booking.id}) }}" class="btn btn-success mr-4">Réserver</a>
+            </li>
+        {% endif %}
+    {% else %}
+        <ul>
+            <li colspan="5">aucun événement trouvé</li>
+        </ul>
+    {% endfor %}
+{% endblock %}
