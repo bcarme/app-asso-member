@@ -7,7 +7,7 @@
     <h1 class="pb-3">Trombinoscope du club</h1>
     <div class="container">
       {{ form_start(form) }}
-      {{ form_widget(form) }}
+      {{ form_widget(form, { 'attr': {'class': 'searchBar '}  }) }}
       {{ form_end(form) }}
     </div>
   <div class="container pt-3">
@@ -24,9 +24,13 @@
       </div>
     </div>
             {% else %}
-            <p>résultat non trouvé</p>
+            <p class"pb-5">résultat non trouvé</p>
+            <a href="{{ path('app_trombi') }}" class="btn btn-outline-secondary">Retour</a>
       {% endfor %}
 
     </div>
 </div>
 {% endblock %}
+        {% block javascripts %}
+$(".myform")[0].reset();
+        {% endblock %}
