@@ -12,6 +12,9 @@
                 <th>Début</th>
                 <th>Fin</th>
                 <th>Titre</th>
+                <th>Catégorie</th>
+                <th>Lieu</th> 
+                <th>Capacité</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -21,6 +24,12 @@
                 <td>{{ booking.beginAt ? booking.beginAt|date('d/m/Y H:i') : '' }}</td>
                 <td>{{ booking.endAt ? booking.endAt|date('d/m/Y H:i') : '' }}</td>
                 <td>{{ booking.title }}</td>
+                <td>{{ booking.category.theme }}</td>
+                <td>{{ booking.location.place }}</td>
+                <td>{{ booking.capacity }} pl. - {%if booking.isSoldOut%} <span class="badge badge-warning text-uppercase">complet</span>
+                {%else%}
+                {{booking.spotsLeft}} restante(s)
+                {%endif%}</td>
                 <td class="d-flex pt-3">
                     <a href="{{ path('booking_edit', {'id': booking.id}) }}" class="btn btn-success mr-4">Éditer<i
                                 class="fas fa-pen ml-1"></i></a>
