@@ -6,6 +6,7 @@
 @import "partials/_calendar";
 @import "partials/_admin";
 @import "partials/_trombi";
+@import "partials/_topnav";
 @import "partials/_navadmin";
 
 html, body {
@@ -17,10 +18,24 @@ html, body {
 }
 
 .container-fluid{
-    height:100vh !important;
+    height:100%;
+    min-height: 100vh !important;
 } 
 
 h1 {
     color: $font-color;
     font-size: 2em;
+}
+
+a:link{
+    text-decoration: none;
+    color:inherit;
+}
+
+ul{
+    list-style-type: none;
+}
+
+.btn{
+    color:white !important;
 }

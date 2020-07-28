@@ -1,14 +1,24 @@
-<div class="bgtop">
+<div class="bgtop navbar justify-content-end">
 	{% if app.user %}
-		<ul class="nav justify-content-end">
+		<ul class="nav">
 			<li class="nav-item-top">
 				<i class="fa fa-user-cog fa-fw text-white"></i>
-				<a href="" class="text-white">{{ app.user.firstname }}
+				<a href="{{ path('app_account', {'id': app.user.id}) }}" class="text-white">{{ app.user.firstname }}
 					{{ app.user.lastname }}</a>
 			</li>
 			<li class="nav-item-top-right">
 				<a href="{{ path('app_logout') }}" class="text-white">Déconnexion</a>
 			</li>
-		</ul>
-		{%endif%}
+			</ul>
+		{% else %}
+		<ul class="nav">
+              <li class="nav-item-top">
+			        <i class="fas fa-sign-in-alt fa-fw text-white"></i>
+                    <a href="{{ path('app_login') }}" class="text-white">Se connecter</a>
+             </li>
+         	 <li class="nav-item-top-right">
+                <a href="{{ path('app_register') }}" class="text-white">Créer un compte</a>
+             </li>
+	    </ul>
+       {% endif %}
 </div>

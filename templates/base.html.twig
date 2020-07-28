@@ -16,6 +16,7 @@
         {% endblock %}
     </head>
     <body>
+        {% block topnav %}{% include '_topnav.html.twig' %}{% endblock %}
         {% block layout %}{% endblock %}
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}

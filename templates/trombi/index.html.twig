@@ -3,7 +3,7 @@
 {% block title %}Trombinoscope{% endblock %}
 
 {% block body %}
-  <div class="container-fluid p-5">
+<div class="container-fluid p-5">
     <h1 class="pb-3">Trombinoscope du club</h1>
     <div class="container">
       {{ form_start(form) }}
@@ -28,9 +28,11 @@
             <a href="{{ path('app_trombi') }}" class="btn btn-outline-secondary">Retour</a>
       {% endfor %}
        </div>
-</div>
-</div>
+
+
            <div class="p-5">
              {{ knp_pagination_render(members) }}
            </div>
+ </div>
+ </div>
 {% endblock %}

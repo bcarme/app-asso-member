@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block body %}
+  <div class="container-fluid p-5">
     <div class="s-form">
         {% for flashError in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flashError }}</div>
@@ -23,4 +24,5 @@
 
         {{ form_end(registrationForm) }}
     </div>
+</div>
 {% endblock %}
