@@ -1,0 +1,57 @@
+.bgtop{
+  background-color:gray;
+}
+
+.nav-item-top{
+  padding:15px 30px 15px 10px;
+  font-weight:bold;
+}
+
+.nav-item-top-right{
+  padding:15px 80px 15px 10px;
+  font-weight:bold;
+}
+
+.nav-link-top{
+  text-decoration: none;
+}
+
+//side menu
+.sidenav{
+  background-color: darkgray;
+}
+
+.sidemenu{
+  width:100%;
+  ul {
+  list-style-type: none;
+  margin-top:-120px;
+  padding:0;
+  }
+  li {
+  padding: 25px 0;
+  cursor: pointer;
+  color: white;
+  text-align: center;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  display: block;
+ }
+ li:hover{
+  background-color: lightgray;
+  color:$first-color !important;
+  transition: color .1s;
+ }
+  a{
+    text-decoration: bolder;
+    font-family: $title-font;
+    font-size:1.2em;
+    color:black !important;
+    text-transform: uppercase;
+  }
+  a:hover {
+    color: $first-color !important;
+    text-decoration: none;
+    }
+}
+

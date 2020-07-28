@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block layout %}
+
+{% block topnav %}{% include '_topnav.html.twig' %}{% endblock %}
+<div class="container-fluid p-0">
+   <div class="row no-gutters">
+        <header class="col-2 navbar sidenav justify-content-center p-0">
+            {% block header %}{% include '_navadmin.html.twig' %}{% endblock %}
+        </header>
+        <main class="col-10">
+            {% block body %}{% endblock %}
+        </main>
+    </div>
+</div>
+{% endblock %}
+

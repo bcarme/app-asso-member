@@ -2,11 +2,12 @@
 
 {% block layout %}
    <div class="row">
-        <header class="col-2">
+        <header class="col-lg-2">
             {% block header %}{% include '_nav.html.twig' %}{% endblock %}
         </header>
-        <main class="col-10">
+        <main class="col-lg-10">
             {% block body %}{% endblock %}
         </main>
     </div>
 {% endblock %}
+

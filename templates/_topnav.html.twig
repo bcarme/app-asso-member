@@ -1,0 +1,14 @@
+<div class="bgtop">
+	{% if app.user %}
+		<ul class="nav justify-content-end">
+			<li class="nav-item-top">
+				<i class="fa fa-user-cog fa-fw text-white"></i>
+				<a href="" class="text-white">{{ app.user.firstname }}
+					{{ app.user.lastname }}</a>
+			</li>
+			<li class="nav-item-top-right">
+				<a href="{{ path('app_logout') }}" class="text-white">Déconnexion</a>
+			</li>
+		</ul>
+		{%endif%}
+</div>

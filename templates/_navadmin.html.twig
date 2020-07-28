@@ -1,0 +1,14 @@
+<div class="sidemenu">
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <ul>
+                <li>
+                        <a href="{{ path('admin_user' ) }}">Rôle admin</a</li>
+                </li>
+      
+        {% endif %}
+                <li><a href="{{ path('member_index' ) }}">Adhérents</a></li>
+                <li><a href="{{ path('category_index' ) }}">Catégories</a></li>
+                <li><a href="{{ path('location_index' ) }}">Lieux</a></li>
+                <li><a href="{{ path('booking_index') }}">Événements</a></li>
+            </ul>
+    </div>
