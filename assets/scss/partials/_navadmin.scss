@@ -1,13 +1,13 @@
 //side menu
-.sidenavUser{
-  background-color: $first-color;
+.sidenav{
+  background-color: darkgray;
 }
 
-.sidemenuUser{
+.sidemenu{
   width:100%;
   ul {
   list-style-type: none;
-  //margin-top:-60px;
+  margin-top:-120px;
   padding:0;
   }
   li {
@@ -20,27 +20,20 @@
   display: block;
  }
  li:hover{
+  background-color: lightgray;
   color:$first-color !important;
   transition: color .1s;
-  color:$second-color;
-  background-color:darken($first-color, 10%);
  }
   a{
     text-decoration: bolder;
     font-family: $title-font;
     font-size:1.2em;
-    color:white !important;
+    color:black !important;
     text-transform: uppercase;
   }
   a:hover {
-    color: $second-color !important;
+    color: $first-color !important;
     text-decoration: none;
     }
 }
 
-.badge-danger{
-  font-family: $title-font;
-  font-size:1.2em;
-  font-weight:bold;
-  margin:40px 20px;
-}
