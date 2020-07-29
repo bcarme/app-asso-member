@@ -6,9 +6,8 @@ $text-font: 'Asap', sans-serif;
 $first-color: #4919ae;
 $second_color: #f7cf49;
 
-// choisir light-color
-// $light-color: lighten($first-color,50%);
-$light-color: #ede7f6;
+$background-color-nav: lighten($first-color,30%);
+$form-color: #ede7f6;
 
 $body-color: #f5f5f5;
 $font-color: #323137;
