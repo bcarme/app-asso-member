@@ -1,17 +1,15 @@
 <div class="sidemenuUser">
- {% if app.user %}
- <div class="d-flex justify-content-center">
-        <p class="badge badge-danger text-white">Statut pas à jour</p> 
-        </div> 
+    {% if app.user %}
+        <div class="d-flex justify-content-center">
+            <p class="badge badge-danger text-white">Statut pas à jour</p>
+        </div>
         <ul>
-              </li>
-                <li><a href="{{ path('member_index' ) }}">Fiche adhérent</a></li>
-                <li><a href="#">Mes créneaux</a></li>
-                <li><a href="#">Mes documents</a></li>
-                <li><a href="#">Mes messages</a></li>
-                <li><a href="{{ path('app_calendar') }}">Planning du club</a></li>
-                <li><a href="{{ path('app_trombi') }}">Trombinoscope</a></li>
+            <li><a href="{{ path('member_index') }}">Fiche adhérent</a></li>
+            <li><a href="#">Mes créneaux</a></li>
+            <li><a href="#">Mes documents</a></li>
+            <li><a href="#">Mes messages</a></li>
+            <li><a href="{{ path('app_calendar') }}">Planning du club</a></li>
+            <li><a href="{{ path('app_trombi') }}">Trombinoscope</a></li>
         </ul>
-  {% endif %}
+    {% endif %}
 </div>
-
