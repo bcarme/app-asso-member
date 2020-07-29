@@ -1,16 +1,18 @@
-{% extends 'layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Connexion
 {% endblock %}
 
-{% block body %}
+{% block layout %}
+   <div class="homeBg"></div>
    <div class="container-fluid p-5">
+    <h1 class="pb-3 text-center">Portail du club</h1>
         <form method="post" class="s-form">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
 
-            <h1 class="h3 mb-4 p-3 text-center s-heading">Se connecter</h1>
+            <h2 class="h3 mb-4 p-3 text-center s-heading">Se connecter</h2>
             <div class="form-group mb-4">
                 <label for="inputEmail"><i class="fas fa-envelope mr-2"></i>Email</label>
                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
