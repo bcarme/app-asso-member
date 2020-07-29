@@ -23,8 +23,16 @@ html, body {
 } 
 
 h1 {
+    font-family: $title-font;
     color: $font-color;
-    font-size: 2em;
+    font-size: 2,1em;
+    font-weight: bold;
+}
+
+h2 {
+    font-family: $title-font;
+    color: $font-color;
+    font-size: 1.7em;
 }
 
 a:link{
@@ -38,4 +46,12 @@ ul{
 
 .btn{
     color:white !important;
+}
+
+a, p {
+    font-family: $text-font;
+}
+
+.homeBg{
+    background-image: url('../images/swimming.jpg');
 }
