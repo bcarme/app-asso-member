@@ -6,9 +6,9 @@
 <div class="container-fluid p-5">
   <h1>Modifier la catégorie</h1>
   <div class="mb-3">
+    <a href="{{ path('category_index') }}" class="btn btn-secondary mr-5">Retour à la liste</a>
    </div>
    <div class="mt-5">
-    <a href="{{ path('category_index') }}" class="btn btn-outline-dark mr-5">Retour à la liste</a>
     {{ include('admin/category/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
  </div>
 </div>
