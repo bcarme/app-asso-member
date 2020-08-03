@@ -1,39 +1,47 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
-{% block title %}Document index{% endblock %}
+{% block title %}Document index
+{% endblock %}
 
 {% block body %}
-    <h1>Document index</h1>
-
+<div class="container-fluid p-5">
+    <h1>Mes documents</h1>
+    <div class="mt-5">
+    {{ form_start(form) }}
+    {{ form_row(form.member) }}
+    <p id="displayVich"></p>
+    {{ form_row(form.imageFile) }}
+    <button class="btn btn-lg btn-primary mt-2">Envoyer</button>
+    {{ form_end(form) }}
+    </div>
+    <h2 class="mt-5">Vos documents</h2>
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>ImageName</th>
-                <th>ImageSize</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
+                <th>Adhérent</th>
+                <th>Document</th>
+                <th>action</th>
             </tr>
         </thead>
         <tbody>
-        {% for document in documents %}
-            <tr>
-                <td>{{ document.id }}</td>
-                <td>{{ document.imageName }}</td>
-                <td>{{ document.imageSize }}</td>
-                <td>{{ document.updatedAt ? document.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('document_show', {'id': document.id}) }}">show</a>
-                    <a href="{{ path('document_edit', {'id': document.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
+            {% for document in documents %}
+                <tr>
+                    <td>{{ document.member.fullname }}</td>
+                    <td>{{ document.imageName }}</td>
+                    <td>
+                        {{ include('document/_delete_form.html.twig') }}
+
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('document_new') }}">Create new</a>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('vich') }}
 {% endblock %}
