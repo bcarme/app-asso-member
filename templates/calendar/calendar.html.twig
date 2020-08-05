@@ -18,7 +18,6 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
@@ -69,10 +68,8 @@
                 maxTime:"23:00:00",
                 displayEventTime: true,
 
-                eventClick: function(info) {
-                    
-                  confirm(info.event.title + "\r\n" + info.event.extendedProps.category + "\r\n" +  info.event.extendedProps.location + "\r\n" + 'Voulez-vous réserver ce créneau ?' ) || event.preventDefault();
-                 
+                eventClick: function(info) {                 
+                    confirm(info.event.title + "\r\n" + info.event.extendedProps.category + "\r\n" +  info.event.extendedProps.location + "\r\n" + "\r\n" + 'Voulez-vous réserver ce créneau ?' ) || event.preventDefault();                
                   } 
 
             });

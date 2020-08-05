@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=RegistrationRepository::class)
- * @UniqueEntity(fields={"member"}, message="Vous avez déjà réservé ce créneau")
+ * @UniqueEntity(fields={"booking"}, message="Vous avez déjà réservé ce créneau")
  */
 class Registration
 {

@@ -143,7 +143,11 @@ class Booking
      */
     public function spotsLeft(): int
     {
-        return $this->capacity - ($this->registrations->count());
+        $spotsLeft = $this->capacity - ($this->registrations->count());
+        if ($spotsLeft < 0){
+            $spotsLeft = 0;
+        }
+        return $spotsLeft;
     }
 
     /**

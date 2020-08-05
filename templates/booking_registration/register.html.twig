@@ -9,13 +9,25 @@
             <h1 class="mt-5 h2 font-weight-light">Inscription :
                 {{ booking.title }}</h1>
             <h2>{{ booking.beginAt ? booking.beginAt|date('d/m/Y H:i') : '' }}</h2>
-
+        {% if booking.isSoldOut %}
+            <h5 class="badge badge-danger text-uppercase p-1 mb-4 mt-2">C'est complet</h5>
+             {{ form_start(form) }}
+            {{ form_row(form.email, { 'attr':{'disabled':'disabled'} }) }}
+            {{ form_row(form.member, { 'attr':{'disabled':'disabled'} }) }}
+            <div>
+                <input type="submit" class="btn btn-primary" disabled value="S'inscrire"/>
+            </div>
+            {{ form_end(form) }}
+        {% else %}
+            <h5 class="badge badge-warning text-uppercase p-1 mb-4 mt-2">places disponibles : {{ booking.spotsleft }}</h5>
             {{ form_start(form) }}
             {{ form_widget(form) }}
             <div>
                 <input type="submit" class="btn btn-primary" value="S'inscrire"/>
             </div>
             {{ form_end(form) }}
+        {% endif %}
+
         </div>
     </div>
 </div>
