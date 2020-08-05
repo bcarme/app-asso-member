@@ -55,10 +55,10 @@ class BookingRegistrationController extends AbstractController
             $em->persist($registration);
             $em->flush();
 
-            // $this->addFlash('success', 'Thanks, you\'re registered !');
+            // $this->addFlash('success', 'Merci pour votre inscription !');
 
             // Redirection pour l'exemple, à modifier
-            return $this->redirectToRoute('booking_registration_index');
+            return $this->redirectToRoute('app_calendar');
         }
 
         return $this->render('booking_registration/register.html.twig', [

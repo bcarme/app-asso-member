@@ -1,22 +1,22 @@
 {% extends 'layout.html.twig' %}
 
-{% block title 'Registration for ' ~ booking.title %}
+{% block title 'Inscription' ~ booking.title %}
 
 {% block body %}
-
+<div class="container-fluid p-5">
     <div class="row">
         <div class="col-md-6 mx-auto">
-            <h1 class="mt-5 h2 font-weight-light">Registration for
+            <h1 class="mt-5 h2 font-weight-light">Inscription :
                 {{ booking.title }}</h1>
             <h2>{{ booking.beginAt ? booking.beginAt|date('d/m/Y H:i') : '' }}</h2>
 
             {{ form_start(form) }}
             {{ form_widget(form) }}
             <div>
-                <input type="submit" class="btn btn-primary" value="S\'inscrire"/>
+                <input type="submit" class="btn btn-primary" value="S'inscrire"/>
             </div>
             {{ form_end(form) }}
         </div>
     </div>
-
+</div>
 {% endblock %}
