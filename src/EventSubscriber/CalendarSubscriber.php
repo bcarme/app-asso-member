@@ -57,12 +57,12 @@ class CalendarSubscriber implements EventSubscriberInterface
                // If the end date is null or not defined, a all day event is created.
              );
              
-                         
+                                               
             $bookingEvent->setOptions([
                  'borderColor' => '#f7cf49',
                  'textColor' => 'black',
                  'backgroundColor' => $booking->getCategory()->getColor(),
-                 'title' => $booking->getTitle() .  "\r\n"  . $booking->getCapacity() . ' place(s) restante(s)',
+                 'title' => $booking->getTitle() .  "\r\n"  . $booking->spotsLeft() . ' place(s) restante(s)',
                  'category' => $booking->getCategory()->getTheme(),
                  'location'=> $booking->getLocation()->getPlace()
                         ]);
