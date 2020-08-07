@@ -47,6 +47,7 @@ class BookingRegistrationController extends AbstractController
 
         $form->handleRequest($request);
 
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $registration->setBooking($booking);
             $registration->setUser($this->getUser());
@@ -57,7 +58,6 @@ class BookingRegistrationController extends AbstractController
 
             // $this->addFlash('success', 'Merci pour votre inscription !');
 
-            // Redirection pour l'exemple, à modifier
             return $this->redirectToRoute('app_calendar');
         }
 
