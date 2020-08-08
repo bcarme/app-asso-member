@@ -29,7 +29,7 @@ class DocumentType extends AbstractType
                 'download_uri' => false,
                 'image_uri' => true,
                 'asset_helper' => true,
-                'label' => 'attestation médicale',
+                'label' => 'Attestation médicale',
             ])
             ->add('member', EntityType::class, [
                 'class' => Member::class,
@@ -40,7 +40,7 @@ class DocumentType extends AbstractType
                         ->orderBy('u.firstname', 'ASC');
                 },
                 'choice_label' => 'fullname',
-                'label' => 'Attestation médicale pour l\'adhérent',
+                'label' => 'Choisir l\'adhérent',
                 'by_reference' => false,
             ]);
     }

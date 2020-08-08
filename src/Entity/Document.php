@@ -3,15 +3,17 @@
 namespace App\Entity;
 
 use DateTime;
-use App\Repository\DocumentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\DocumentRepository;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=DocumentRepository::class)
  *  @Vich\Uploadable
+ * @UniqueEntity(fields={"member"}, message="Vous avez déjà une attestation à ce nom")
  */
 class Document
 {

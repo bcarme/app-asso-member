@@ -4,43 +4,48 @@
 {% endblock %}
 
 {% block body %}
-<div class="container-fluid p-5">
-    <h1>Mes documents</h1>
-    <div class="mt-5">
-    {{ form_start(form) }}
-    {{ form_row(form.member) }}
-    <p id="displayVich"></p>
-    {{ form_row(form.imageFile) }}
-    <button class="btn btn-lg btn-primary mt-2">Envoyer</button>
-    {{ form_end(form) }}
-    </div>
-    <h2 class="mt-5">Vos documents</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Adhérent</th>
-                <th>Document</th>
-                <th>action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for document in documents %}
-                <tr>
-                    <td>{{ document.member.fullname }}</td>
-                    <td>{{ document.imageName }}</td>
-                    <td>
-                        {{ include('document/_delete_form.html.twig') }}
+    <div class="container-fluid p-5">
+        <h1>Mes documents</h1>
+        <div class="mt-5 col-6">
+            {{ form_start(form) }}
+            {{ form_row(form.member) }}
+            <p id="displayVich"></p>
+            {{ form_row(form.imageFile) }}
+            <button class="btn btn-lg btn-primary mt-2">Envoyer</button>
+            {{ form_end(form) }}
+        </div>
 
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="5">no records found</td>
-                </tr>
+        <div class="col-6">
+            {% for member in members %}
+                {% if app.user.id == member.user.id %}
+                    
+                <h2 class="mt-5">{{ member.fullname }}</h2>
+                   
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Documents</th>
+                                <th>action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for document in documents %}
+                                {% if member.id == document.member.id %}
+                                    <tr>
+                                        <td>{{ document.imageName }}</td>
+                                        <td>
+                                            {{ include('document/_delete_form.html.twig') }}
+                                        </td>
+                                    </tr>    
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    
+                {% endif %}
             {% endfor %}
-        </tbody>
-    </table>
-</div>
+        </div>
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{ encore_entry_script_tags('vich') }}
