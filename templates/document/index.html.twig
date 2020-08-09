@@ -17,7 +17,7 @@
 
         <div class="col-6">
             {% for member in members %}
-                {% if app.user.id == member.user.id %}
+                {% if is_granted('SHOW', member) %}
                     
                 <h2 class="mt-5">{{ member.fullname }}</h2>
                    
@@ -30,11 +30,13 @@
                         </thead>
                         <tbody>
                             {% for document in documents %}
-                                {% if member.id == document.member.id %}
+                                {% if is_granted('SHOW', document) and member.id == document.member.id %}
                                     <tr>
                                         <td>{{ document.imageName }}</td>
                                         <td>
+                                        {% if is_granted('DELETE', document) %}
                                             {{ include('document/_delete_form.html.twig') }}
+                                        {% endif %}
                                         </td>
                                     </tr>    
                                 {% endif %}

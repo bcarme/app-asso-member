@@ -66,6 +66,12 @@ class Document
     private $member;
 
     /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="documents")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
      */
     public function setImageFile(?File $imageFile = null): void
@@ -130,5 +136,17 @@ class Document
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }
