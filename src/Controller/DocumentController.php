@@ -45,29 +45,6 @@ class DocumentController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="document_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $document = new Document();
-        $form = $this->createForm(DocumentType::class, $document);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($document);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('document_index');
-        }
-
-        return $this->render('document/new.html.twig', [
-            'document' => $document,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
      * @Route("/{id}", name="document_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Document $document): Response
