@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class TrombiSearchType extends AbstractType
 {
@@ -17,7 +18,9 @@ class TrombiSearchType extends AbstractType
             ->setMethod('GET')
             ->add('search', SearchType::class, ['label'=>' ', 'attr' => [
                 'placeholder' => 'chercher un membre par prénom ou nom...'],
-            ]);
+                'required'=>false,
+                'trim'=> true
+                ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

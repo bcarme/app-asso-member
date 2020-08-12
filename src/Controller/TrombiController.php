@@ -34,7 +34,7 @@ class TrombiController extends AbstractController
 
 
     $members = $paginator->paginate(
-        $members, // Requête contenant les données à paginer (ici nos articles)
+        $members, // Requête contenant les données à paginer
         $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
         10// Nombre de résultats par page
     );

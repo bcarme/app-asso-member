@@ -5,10 +5,14 @@
 {% block body %}
 <div class="container-fluid p-5">
     <h1 class="pb-3">Trombinoscope du club</h1>
-    <div class="container">
-      {{ form_start(form) }}
-      {{ form_widget(form, { 'attr': {'class': 'searchBar '}  }) }}
-      {{ form_end(form) }}
+    <div class="container wrap">
+    {{ form_start(form, {'attr': {'class': 'search'}}) }}
+        {{ form_widget(form.search, {'attr': {'class': 'searchTerm'}}) }}
+             <button type="submit" class="searchButton">
+                 <i class="fa fa-search"></i>
+            </button>
+           <a href="{{ path('app_trombi') }}"><i class="fa fa-times-circle fa-2x ml-3"></i></a>
+    {{ form_end(form) }}
     </div>
   <div class="container pt-3">
  {% for member in members|sort|reverse %}

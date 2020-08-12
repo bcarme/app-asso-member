@@ -11,13 +11,53 @@
     margin:10px;
 }
 
+
 .fa-envelope:hover{
     color:$second-color;
 }
 
 #trombi_search_search{
-  color: blue;
-  height: 50px;
-  width: 1100px;
+  height: 36px;
+  width: 1070px;
 }
 
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+.search:focus{
+  color:red;
+}
+.searchTerm {
+  width: 100%;
+  border: 2px solid $third-color;
+  border-right: none;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: black;
+}
+
+
+.searchButton {
+  width: 40px;
+  height: 36px;
+  border: 1px solid $third-color;
+  background: $third-color;
+  text-align: center;
+  color: white;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.fa-times-circle{
+  padding-top:3px;
+  color: $third-color;
+}
+
+a:visited{
+  color:inherit;
+}

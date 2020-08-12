@@ -3,3 +3,4 @@
 'This value is not valid': 'Format invalide'
 'This value is too short. It should have 5 characters or more.': 'Il faut au minimum 5 chiffres'
 'Email could not be found': 'Email inconnu'
+'Please fill out this field.' : 'Veuillez remplir le champ'
