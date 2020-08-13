@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Member;
+use App\Entity\Booking;
 use App\Entity\Registration;
 use App\Repository\MemberRepository;
 use Symfony\Component\Form\AbstractType;

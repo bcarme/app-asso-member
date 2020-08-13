@@ -9,8 +9,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="only_one_booking", columns={"booking_id", "member_id"})})
  * @ORM\Entity(repositoryClass=RegistrationRepository::class)
- * @UniqueEntity(fields={"booking"}, message="Vous avez déjà réservé ce créneau")
+ * @UniqueEntity(
+ *      fields={"booking", "member"},
+ *      message="Vous avez déjà réservé ce créneau"
+ * )
  */
 class Registration
 {
@@ -28,6 +32,7 @@ class Registration
 
     /**
      * @ORM\ManyToOne(targetEntity=Booking::class, inversedBy="registrations")
+     *
      */
     private $booking;
 
@@ -35,6 +40,7 @@ class Registration
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="registrations")
      */
     private $user;
+    
     /**
      * @ORM\ManyToOne(targetEntity=Member::class, inversedBy="registrations")
      */

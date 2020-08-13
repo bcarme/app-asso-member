@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 /**
  * @Route("/reservation", name="booking_registration_")
@@ -47,7 +48,7 @@ class BookingRegistrationController extends AbstractController
 
         $form->handleRequest($request);
 
-        
+        try {
         if ($form->isSubmitted() && $form->isValid()) {
             $registration->setBooking($booking);
             $registration->setUser($this->getUser());
@@ -59,11 +60,17 @@ class BookingRegistrationController extends AbstractController
             // $this->addFlash('success', 'Merci pour votre inscription !');
 
             return $this->redirectToRoute('app_calendar');
+         }
+        } catch (UniqueConstraintViolationException $e) {
+            $this->addFlash("error", "Erreur : Vous avez déjà réservé ce créneau");
         }
-
+        
+        
+   
         return $this->render('booking_registration/register.html.twig', [
             'booking' => $booking,
             'form' => $form->createView()
         ]);
     }
+   
 }
