@@ -1,12 +1,12 @@
 <div class="sidemenuUser">
     {% if app.user %}
         <div class="d-flex justify-content-center">
-            <p class="badge badge-danger text-white">Statut pas à jour</p>
+            <p class="badge badge-status text-white">Statut pas à jour</p>
         </div>
         <ul>
             <li><a href="{{ path('member_index') }}">Fiche adhérent</a></li>
             <li><a href="#">Mes créneaux</a></li>
-            <li><a href="{{ path('document_index') }}">Mes documents</a></li>
+            <li><a href="{{ path('app_document') }}">Mes documents</a></li>
             <li><a href="#">Mes messages</a></li>
             <li><a href="{{ path('app_calendar') }}">Planning du club</a></li>
             <li><a href="{{ path('app_trombi') }}">Trombinoscope</a></li>
