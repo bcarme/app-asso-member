@@ -19,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DocumentController extends AbstractController
 {
     /**
-     * @Route("/", name="document_index", methods={"GET","POST"})
+     * @Route("/", name="app_document", methods={"GET","POST"})
      */
     public function index(MemberRepository $memberRepository, DocumentRepository $documentRepository, Request $request): Response
     {
@@ -33,7 +33,7 @@ class DocumentController extends AbstractController
             $entityManager->persist($document);
             $entityManager->flush();
 
-            return $this->redirectToRoute('document_index');
+            return $this->redirectToRoute('app_document');
         }
 
         return $this->render('document/index.html.twig', [
@@ -57,6 +57,6 @@ class DocumentController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('document_index');
+        return $this->redirectToRoute('app_document');
     }
 }

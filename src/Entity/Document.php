@@ -33,8 +33,8 @@ class Document
      * @Vich\UploadableField(mapping="uploads_images", fileNameProperty="imageName", size="imageSize")
      *@Assert\File(
      *     maxSize = "500k",
-     *     mimeTypes = {"image/jpeg", "image/JPEG", "image/png", "image/PNG", "image/jpg", "image/JPG"},
-     *     mimeTypesMessage = "Seuls les formats JEPG, JPG et PNG sont acceptés"
+     *     mimeTypes = {"image/jpeg", "image/JPEG", "image/png", "image/PNG", "image/jpg", "image/JPG", "application/pdf", "application/x-pdf"},
+     *     mimeTypesMessage = "Seuls les formats JPEG, JPG, PNG et PDF sont acceptés"
      * )
      * @var File|null
      */
