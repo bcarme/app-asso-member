@@ -53,18 +53,23 @@ class CalendarSubscriber implements EventSubscriberInterface
              $bookingEvent = new Event(
                  $booking->getTitle(),
                  $booking->getBeginAt(),
-                 $booking->getEndAt(), // If the end date is null or not defined, a all day event is created.
+                 $booking->getEndAt(),
+               // If the end date is null or not defined, a all day event is created.
              );
-
-             $bookingEvent->setOptions([
-                 'backgroundColor' => '#f7cf49',
+             
+                                               
+            $bookingEvent->setOptions([
                  'borderColor' => '#f7cf49',
                  'textColor' => 'black',
-             ]);
+                 'backgroundColor' => $booking->getCategory()->getColor(),
+                 'title' => $booking->getTitle() .  "\r\n"  . $booking->spotsLeft() . ' place(s) restante(s)',
+                 'category' => $booking->getCategory()->getTheme(),
+                 'location'=> $booking->getLocation()->getPlace()
+                        ]);
              $bookingEvent->addOption(
                  'url',
                  $this->router->generate('booking_registration_register', [
-                     'id' => $booking->getId(),
+                     'id' => $booking->getId()   
                  ])
              );
     

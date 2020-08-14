@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 /**
  * @Route("/reservation", name="booking_registration_")
@@ -42,23 +43,20 @@ class BookingRegistrationController extends AbstractController
     {
 
         $registration = new Registration();
-
         $form = $this->createForm(BookingRegistrationType::class, $registration);
-
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $registration->setBooking($booking);
-            $registration->setUser($this->getUser());
-            // $registration->setMember($this->getUser());
+        try {
+            if ($form->isSubmitted() && $form->isValid()) {
+                $registration->setBooking($booking);
+                $registration->setUser($this->getUser());
+                $em->persist($registration);
+                $em->flush();
 
-            $em->persist($registration);
-            $em->flush();
-
-            // $this->addFlash('success', 'Thanks, you\'re registered !');
-
-            // Redirection pour l'exemple, à modifier
-            return $this->redirectToRoute('booking_registration_index');
+                return $this->redirectToRoute('app_calendar');
+            }
+        } catch (UniqueConstraintViolationException $e) {
+            $this->addFlash("error", "Erreur : Vous avez déjà réservé ce créneau");
         }
 
         return $this->render('booking_registration/register.html.twig', [

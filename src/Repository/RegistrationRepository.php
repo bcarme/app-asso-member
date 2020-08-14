@@ -19,4 +19,5 @@ class RegistrationRepository extends ServiceEntityRepository
         parent::__construct($registry, Registration::class);
     }
 
+
 }
