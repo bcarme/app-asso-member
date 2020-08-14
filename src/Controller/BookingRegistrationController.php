@@ -43,34 +43,25 @@ class BookingRegistrationController extends AbstractController
     {
 
         $registration = new Registration();
-
         $form = $this->createForm(BookingRegistrationType::class, $registration);
-
         $form->handleRequest($request);
 
         try {
-        if ($form->isSubmitted() && $form->isValid()) {
-            $registration->setBooking($booking);
-            $registration->setUser($this->getUser());
-            // $registration->setMember($this->getUser());
+            if ($form->isSubmitted() && $form->isValid()) {
+                $registration->setBooking($booking);
+                $registration->setUser($this->getUser());
+                $em->persist($registration);
+                $em->flush();
 
-            $em->persist($registration);
-            $em->flush();
-
-            // $this->addFlash('success', 'Merci pour votre inscription !');
-
-            return $this->redirectToRoute('app_calendar');
-         }
+                return $this->redirectToRoute('app_calendar');
+            }
         } catch (UniqueConstraintViolationException $e) {
             $this->addFlash("error", "Erreur : Vous avez déjà réservé ce créneau");
         }
-        
-        
-   
+
         return $this->render('booking_registration/register.html.twig', [
             'booking' => $booking,
             'form' => $form->createView()
         ]);
     }
-   
 }
