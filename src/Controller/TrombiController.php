@@ -19,9 +19,8 @@ class TrombiController extends AbstractController
      */
     public function index(MemberRepository $memberRepository, Request $request, PaginatorInterface $paginator):Response
     {
-        $members = $this->getDoctrine()
-        ->getRepository(Member::class)
-        ->findAll();
+    $members = $memberRepository->findAllInAscOrder();
+
 
     $form = $this->createForm(TrombiSearchType::class);
     $form->handleRequest($request);
@@ -32,14 +31,14 @@ class TrombiController extends AbstractController
         $members =  $memberRepository->findByName($search);
     }
 
-
-    $members = $paginator->paginate(
+    $page = $paginator->paginate(
         $members, // Requête contenant les données à paginer
         $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-        10// Nombre de résultats par page
+        5// Nombre de résultats par page
     );
     return $this->render('trombi/index.html.twig', [
         'members' => $members,
+        'page' => $page,
         'form' => $form->createView(),
     ]);
   }
