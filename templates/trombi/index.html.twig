@@ -15,7 +15,7 @@
     {{ form_end(form) }}
     </div>
   <div class="container pt-3">
- {% for member in members|sort|reverse %}
+ {% for member in page %}
     <div class="row border justify-content-start lineTrombi">
       <div class="col-2">
         <img class="imgTrombi" src="{{ vich_uploader_asset(member, 'imageFile') }}" alt="card image">
@@ -35,7 +35,7 @@
 
 
            <div class="p-5">
-             {{ knp_pagination_render(members) }}
+             {{ knp_pagination_render(page) }}
            </div>
  </div>
  </div>

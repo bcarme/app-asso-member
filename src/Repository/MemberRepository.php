@@ -22,11 +22,11 @@ class MemberRepository extends ServiceEntityRepository
 
     public function findAllInAscOrder()
     {
-        return $this->createQueryBuilder('m')
-            ->orderBy('m.lastname', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
+        $qb = $this->createQueryBuilder('mem')
+        ->add('orderBy', ['mem.lastname ASC, mem.firstname ASC'])
+        ->getQuery();
+        return $qb->execute();
+        
     }
 
 
