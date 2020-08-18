@@ -1,0 +1,12 @@
+{% extends 'layoutEmail.html.twig' %}
+{% set page = 'send_mail' %}
+
+{% block body %}
+    <div>
+        <h2>Vous avez réservé le créneau suivant</h2>
+        <h3>Cours : {{ registration.booking.title}}</h3>
+        <h3>Date : {{ registration.booking.beginAt|date('d/m/Y H:i') }}</h3>
+        <h3>Lieu: {{ registration.booking.location.place}}</h3>
+        <p class="mt-3">Si vous souhaitez annuler, merci de vous connecter à <a href="{{ url('app_login') }}">votre espace</a> et cliquer sur Mes créneaux</p>
+    </div>
+{% endblock %}
