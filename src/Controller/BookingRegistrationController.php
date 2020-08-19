@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 /**
  * @Route("/reservation", name="booking_registration_")
@@ -35,11 +37,15 @@ class BookingRegistrationController extends AbstractController
     }
 
     /**
-     * sera utilisé pour la modal dans le calendar
      * 
      * @Route("/{id}/sinscrire", name="register", methods={"GET", "POST"})
+     * @param Request $request
+     * @param MailerInterface $mailer
+     * @return Response
+     * @throws TransportExceptionInterface
      */
-    public function register(Booking $booking, Request $request, EntityManagerInterface $em)
+    public function register(Booking $booking, EntityManagerInterface $em,  Request $request,
+    MailerInterface $mailer): Response
     {
 
         $registration = new Registration();
@@ -52,6 +58,16 @@ class BookingRegistrationController extends AbstractController
                 $registration->setUser($this->getUser());
                 $em->persist($registration);
                 $em->flush();
+                
+                $email = (new Email())
+                ->from($this->getParameter('mailer_from'))
+                ->to($form->get('email')->getData())
+                ->subject('Vous avez reçu un nouveau message du club.')
+                ->html($this->renderView('emails/_timeslot.html.twig', [
+                    'registration' => $registration
+                ]));
+                $mailer->send($email);
+                $this->addFlash('success', 'Un email de confirmation vous a été envoyé');
 
                 return $this->redirectToRoute('app_calendar');
             }
