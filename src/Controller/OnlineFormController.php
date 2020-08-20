@@ -9,9 +9,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/online/form")
+ * @IsGranted("ROLE_USER")
  */
 class OnlineFormController extends AbstractController
 {
@@ -36,6 +38,7 @@ class OnlineFormController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $onlineForm->setUser($this->getUser());
             $entityManager->persist($onlineForm);
             $entityManager->flush();
 
@@ -83,6 +86,8 @@ class OnlineFormController extends AbstractController
      */
     public function delete(Request $request, OnlineForm $onlineForm): Response
     {
+        $this->denyAccessUnlessGranted('DELETE', $onlineForm);
+
         if ($this->isCsrfTokenValid('delete'.$onlineForm->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($onlineForm);

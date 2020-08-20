@@ -128,6 +128,12 @@ class OnlineForm
     private $parentName;
 
     /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="onlineForms")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
      */
     public function setImageFile(?File $imageFile = null): void
@@ -184,6 +190,18 @@ class OnlineForm
     public function setParentName(string $parentName): self
     {
         $this->parentName = $parentName;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

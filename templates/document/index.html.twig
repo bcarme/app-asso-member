@@ -38,9 +38,9 @@
                                         <tr>
                                             <td>autorisation parentale: {{ online_form.member.fullname }}</td>
                                             <td>
-                                                {# {% if is_granted('DELETE', document) %} #}
+                                                {% if is_granted('DELETE', online_form) %}
                                                     {{ include('online_form/_delete_form.html.twig') }}
-                                                {# {% endif %} #}
+                                                {% endif %}
                                             </td>
                                         </tr>
                                     {% endif %}
