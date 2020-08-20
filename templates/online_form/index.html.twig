@@ -1,0 +1,43 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}OnlineForm index{% endblock %}
+
+{% block body %}
+    <h1>OnlineForm index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>HasAgreedPhoto</th>
+                <th>HasAgreedTransportation</th>
+                <th>ImageName</th>
+                <th>Member</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for online_form in online_forms %}
+            <tr>
+                <td>{{ online_form.id }}</td>
+                <td>{{ online_form.date ? online_form.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ online_form.hasAgreedPhoto ? 'Yes' : 'No' }}</td>
+                <td>{{ online_form.hasAgreedTransportation ? 'Yes' : 'No' }}</td>
+                <td>{{ online_form.imageName }}</td>
+                <td>{{ online_form.member.fullname }}</td>
+                <td>
+                    <a href="{{ path('online_form_show', {'id': online_form.id}) }}">show</a>
+                    <a href="{{ path('online_form_edit', {'id': online_form.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('online_form_new') }}">Create new</a>
+{% endblock %}

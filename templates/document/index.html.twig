@@ -6,53 +6,96 @@
 {% block body %}
     <div class="container-fluid p-5">
         <h1>Mes documents</h1>
-        <div class="mt-5 col-6">
-            {{ form_start(form) }}
-            {{ form_row(form.member) }}
-                {% if form_errors(form.imageFile) %}
-                    <p id="displayVich" style="padding-top: 68px;"></p>
-                {% else %}
-                    <p id="displayVich">
-                {% endif %}
-            {{ form_row(form.imageFile) }}
-            <button class="btn btn-lg btn-primary mt-2">Envoyer</button>
-            {{ form_end(form) }}
-        </div>
+        {{ include('document/_form.html.twig') }}
 
-        <div class="col-6">
-            {% for member in members %}
-                {% if is_granted('SHOW', member) %}
-                    
-                <h2 class="mt-5">{{ member.fullname }}</h2>
-                   
-                    <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>Documents</th>
-                                <th>action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for document in documents %}
-                                {% if is_granted('SHOW', document) and member.id == document.member.id %}
-                                    <tr>
-                                        <td>{{ document.imageName }}</td>
-                                        <td>
-                                        {% if is_granted('DELETE', document) %}
-                                            {{ include('document/_delete_form.html.twig') }}
-                                        {% endif %}
-                                        </td>
-                                    </tr>    
-                                {% endif %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    
-                {% endif %}
-            {% endfor %}
+        <div class="row">
+            <div class="col-5">
+                {% for member in members %}
+                    {% if is_granted('SHOW', member) %}
+                        <h2 class="mt-5">{{ member.fullname }}</h2>
+                        <table class="table">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Documents</th>
+                                    <th>action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for document in documents %}
+                                    {% if is_granted('SHOW', document) and member.id == document.member.id %}
+                                        <tr>
+                                            <td>attestation médicale: {{ document.member.fullname }}</td>
+                                            <td>
+                                                {% if is_granted('DELETE', document) %}
+                                                    {{ include('document/_delete_form.html.twig') }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                {% for online_form in online_forms %}
+                                    {% if member.id == online_form.member.id %}
+                                        <tr>
+                                            <td>autorisation parentale: {{ online_form.member.fullname }}</td>
+                                            <td>
+                                                {# {% if is_granted('DELETE', document) %} #}
+                                                    {{ include('online_form/_delete_form.html.twig') }}
+                                                {# {% endif %} #}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="col-5">
+                <h2 class="mt-5">Documents à remplir en ligne</h2>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <a href="{{ path('online_form_new') }}" class="btn btn-primary">Remplir l'autorisation parentale</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
 {% endblock %}
+
 {% block javascripts %}
+    {{ parent() }}
     {{ encore_entry_script_tags('vich') }}
 {% endblock %}

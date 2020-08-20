@@ -36,6 +36,7 @@ class Document
      *     mimeTypes = {"image/jpeg", "image/JPEG", "image/png", "image/PNG", "image/jpg", "image/JPG", "application/pdf", "application/x-pdf"},
      *     mimeTypesMessage = "Seuls les formats JPEG, JPG, PNG et PDF sont acceptés"
      * )
+     * @Assert\NotBlank(message="L'attestation médicale est obligatoire")
      * @var File|null
      */
     private $imageFile;
