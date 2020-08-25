@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 /**
  * @Route("/online/form")
@@ -56,6 +58,31 @@ class OnlineFormController extends AbstractController
      */
     public function show(OnlineForm $onlineForm): Response
     {
+        return $this->render('online_form/show.html.twig', [
+            'online_form' => $onlineForm,
+        ]);
+    }
+
+    /**
+     * @Route("/pdf/{id}", name="online_form_pdf", methods={"GET"})
+     */
+    public function generatePdf(OnlineForm $onlineForm): Response
+    {
+        $pdfOptions = new Options();
+        // $pdfOptions->set('isHtml5ParserEnabled', true);
+        $pdfOptions->set('isRemoteEnabled', true);
+        // $pdfOptions->setIsRemoteEnabled(true);
+        $dompdf = new Dompdf($pdfOptions);
+        $html = $this->renderView('online_form/pdf.html.twig', [
+            'online_form' => $onlineForm,
+        ]);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $dompdf->stream("autorisation_parentale.pdf", [
+            "Attachment" => false
+        ]);
+
         return $this->render('online_form/show.html.twig', [
             'online_form' => $onlineForm,
         ]);

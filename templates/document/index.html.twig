@@ -9,7 +9,7 @@
         {{ include('document/_form.html.twig') }}
 
         <div class="row">
-            <div class="col-5">
+            <div class="col-6">
                 {% for member in members %}
                     {% if is_granted('SHOW', member) %}
                         <h2 class="mt-5">{{ member.fullname }}</h2>
@@ -17,7 +17,7 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th>Documents</th>
-                                    <th>action</th>
+                                    <th>actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,8 +36,9 @@
                                 {% for online_form in online_forms %}
                                     {% if member.id == online_form.member.id %}
                                         <tr>
-                                            <td>autorisation parentale: {{ online_form.member.fullname }}</td>
-                                            <td>
+                                            <td>autorisation parentale</td>
+                                            <td class="d-flex justify-content-around">
+                                            <a href="{{ path('online_form_pdf', {'id': online_form.id}) }}" class="btn btn-success"><i class="far fa-file-pdf mr-2"></i>PDF</a>
                                                 {% if is_granted('DELETE', online_form) %}
                                                     {{ include('online_form/_delete_form.html.twig') }}
                                                 {% endif %}

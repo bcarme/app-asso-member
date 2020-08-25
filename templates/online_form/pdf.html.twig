@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Autorisation parentale</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/flatly/bootstrap.min.css"/>
+    </head>
+    <body>
+        <h4 class="text-center m-5">AUTORISATION PARENTALE<br>
+            POUR LES ADHERENTS MINEURS</h4>
+        <div class="m-3">
+            <p>Je soussigné(e):
+                {{ online_form.parentName }}</p>
+            <p>déclare avoir plein exercice de l’autorité parentale et autorise mon enfant:
+                {{ online_form.member.fullname }}</p>
+            <p>né(e) le
+                {{ online_form.member.dateOfBirth|format_datetime('full', 'none', locale='fr') }}</p>
+            <p>adresse:
+                {{ online_form.member.address }}</p>
+            <p>code postal :
+                {{ online_form.member.citycode }}</p>
+            <p>code postal :
+                {{ online_form.member.town }}</p>
+            <p>- j’autorise mon enfant à participer aux diverses manifestations organisées au sein de la section du
+                CLUB SPORTIF TEST qui propose ces activités.</p>
+
+            {% if online_form.hasAgreedPhoto == true %}
+                <p>- j’accepte que le CLUB SPORTIF TEST utilise des photographies de groupe prises lors des activités du Club sur lesquelles pourrait figurer mon enfant.</p>
+            {% else %}
+                <p>- je n’accepte pas que le CLUB SPORTIF TEST utilise des photographies de groupe prises lors des
+                    activités du Club sur lesquelles pourrait figurer mon enfant.</p>
+            {% endif %}
+
+            <p>- en cas d’accident (dans le cadre d’activités sportives ou au cours des déplacements), j’autorise les
+                responsables du club ainsi que les animateurs sportifs à prendre toutes dispositions d’urgence que
+                nécessiteraient les circonstances.</p>
+
+            <p>- je prends note, par ailleurs, que la responsabilité du club peut être engagée seulement pendant les
+                horaires correspondant aux entraînements et aux compétitions.</p>
+
+            <p>- si, au début d’un entraînement ou lors d’un rendez-vous pour un match, le responsable n’est pas
+                présent (un retard est toujours possible), il est nécessaire d’attendre son arrivée. Les enfants ne doivent
+                pas rester sans surveillance.</p>
+
+            {% if online_form.hasAgreedTransportation == true %}
+                <p>- j’autorise mon enfant à effectuer les déplacements avec les responsables du club et les parents accompagnateurs en
+                    voitures particulières, et m’engage également à effectuer au minimum un déplacement au cours de la
+                    saison.</p>
+            {% else %}
+                <p>- je n’autorise pas mon enfant à effectuer les déplacements en
+                    voitures particulières.</p>
+            {% endif %}
+
+            <p>Le
+                {{ online_form.date|format_datetime('full', 'none', locale='fr') }}</p>
+
+            <p>Signature</p>
+            {# <img src="{{ absolute_url(vich_uploader_asset(online_form, 'imageFile')) }}" style="width:350px;"> #}
+            {# <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/competitive-swimmers-racing-in-outdoor-pool-royalty-free-image-1584113727.jpg?crop=1xw:0.75xh;center,top&resize=1200:*" alt="{{ online_form.imageName }}" style="width:350px;"> #}
+        </div>
+    </body>
+</html>
