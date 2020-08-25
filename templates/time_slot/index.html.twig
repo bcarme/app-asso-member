@@ -1,42 +1,50 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Mes créneaux{% endblock %}
+{% block title %}Mes créneaux
+{% endblock %}
 
 {% block body %}
-<div class="container-fluid p-5">
-    <h1 class="pb-3">Mes créneaux</h1>
- <div class="col-6">
-            {% for member in members %}
-                {% if is_granted('SHOW', member) %}
-                    
-                <h2 class="mt-5">{{ member.fullname }}</h2>
-                   
-                    <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>Créneaux</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for registration in registrations %}
-                                {% if is_granted('SHOW', registration) and member.id == registration.member.id %}
-                                    <tr>
-                                       <td>{{ registration.booking.title }} -  le {{ registration.booking.beginAt ? registration.booking.beginAt|date('d/m/Y H:i') : ''}}</td>
-                                        <td>
-                                        {% if is_granted('DELETE', registration) %}
-                                            {{ include('booking_registration/_delete_form.html.twig') }}
-                                        {% endif %}
-                                        </td>
-                                    </tr>    
-                                {% endif %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    
-                {% endif %}
-            {% endfor %}
-        </div>
-    </div>
-</div>
-{% endblock %}
+	<div class="container-fluid p-5">
+		<h1 class="pb-3">Mes créneaux</h1>
+		<div class="row pl-3">
+			<div>
+				<p>Vous pouvez télécharger vos créneaux en format .csv et les importer dans votre agenda Google : enregistrer le fichier CSV et l'importer dans Google Agenda (Paramètres > Importer et exporter)
+					<a class="btn btn-success mr-2 ml-2" href="{{ path('slot_export') }}">
+						<i class="fas fa-table mr-2"></i>
+						Télécharger les crénaux</a>
+				</p>
+			</div>
+			{% for member in members %}
+				{% if is_granted('SHOW', member) %}
+					<div class="col-lg-6">
+						<h2 class="mt-5">{{ member.fullname }}</h2>
+						<table class="table">
+							<thead class="thead-light">
+								<tr>
+									<th>Créneaux</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for registration in registrations %}
+									{% if is_granted('SHOW', registration) and member.id == registration.member.id %}
+										<tr>
+											<td>{{ registration.booking.title }}
+												-  le
+												{{ registration.booking.beginAt ? registration.booking.beginAt|date('d/m/Y H:i') : ''}}</td>
+											<td>
+												{% if is_granted('DELETE', registration) %}
+													{{ include('booking_registration/_delete_form.html.twig') }}
+												{% endif %}
+											</td>
+										</tr>
+									{% endif %}
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+</div>{% endblock %}

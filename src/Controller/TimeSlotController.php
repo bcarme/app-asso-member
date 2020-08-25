@@ -30,6 +30,28 @@ class TimeSlotController extends AbstractController
         ]);
     }
 
+        /**
+     * @Route("/export/creneaux", name="slot_export", methods={"GET"})
+     * @param MemberRepository $memberRepository
+     * @param RegistrationRepository $registrationRepository
+     * @return Response
+     */
+    public function exportTimeSlots(MemberRepository $memberRepository, RegistrationRepository $registrationRepository): Response
+    {
+        $csv = $this->renderView('time_slot/export_slots.csv.twig', [
+            'registrations' => $registrationRepository->findByDateAsc(),
+            'members' => $memberRepository->findAll(),
+        ]);
+
+        $response = new Response($csv);
+        $response->setStatusCode(200);
+
+        $response->headers->set('Content-Type', 'application/csv;charset=UTF-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="export_creneaux.csv"');
+
+        return $response;
+    }
+
 
     /**
      * @Route("/{id}", name="app_slot_delete", methods={"DELETE"})

@@ -1,0 +1,10 @@
+Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location,Private
+  {% for member in members %}
+    {% if is_granted('SHOW', member) %}
+    {% for registration in registrations %}
+    {% if is_granted('SHOW', registration) and member.id == registration.member.id %}
+"{{ registration.booking.title}}","{{ registration.booking.beginAt|date('d/m/Y') }}","{{ registration.booking.beginAt|date('H:i') }}","{{ registration.booking.endAt|date('d/m/Y') }}","{{ registration.booking.endAt|date('H:i') }}","False","{{ registration.booking.category.theme}}","{{ registration.booking.location.place }}","True"
+      {% endif %}
+      {% endfor %}
+   {% endif %}
+{% endfor %}
