@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class OnlineFormType extends AbstractType
+class OnlineImageFormType extends AbstractType
 {
     public function __construct(Security $security)
     {
@@ -26,24 +26,11 @@ class OnlineFormType extends AbstractType
     {
         $user = $this->security->getUser();
         $builder
-            ->add('parentName', TextType::class, [
-                'label' => 'Je soussigné(e):',
-                'attr' => array(
-                'placeholder' => 'Nom du parent'
-                )
-            ])
             ->add('date', DateType::class, [
                 'widget' => 'single_text'
             ])
             ->add('hasAgreedPhoto', ChoiceType::class, [
                 'label' => 'Droit à l\'image',
-                'choices'  => [
-                    'Oui' => true,
-                    'Non' => false,
-                ],
-            ])
-            ->add('hasAgreedTransportation', ChoiceType::class, [
-                'label' => 'Déplacement',
                 'choices'  => [
                     'Oui' => true,
                     'Non' => false,

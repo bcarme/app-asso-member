@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Droit à l'image</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/flatly/bootstrap.min.css"/>
+    </head>
+    <body>
+        <h4 class="text-center m-5">DROIT à L'IMAGE</h4>
+        <div class="m-3">
+
+            {% if online_form.hasAgreedPhoto == true %}
+                <p>- j’accepte que le CLUB SPORTIF TEST utilise des photographies de groupe prises lors des activités du Club sur lesquelles je pourrais figurer.</p>
+            {% else %}
+                <p>- je n’accepte pas que le CLUB SPORTIF TEST utilise des photographies de groupe prises lors des
+                    activités du Club sur lesquelles je pourrais figurer.</p>
+            {% endif %}
+
+            <p>Le
+                {{ online_form.date|format_datetime('full', 'none', locale='fr') }}</p>
+
+            <p>Signature</p>
+            {# <img src="{{ absolute_url(vich_uploader_asset(online_form, 'imageFile')) }}" style="width:350px;"> #}
+            <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/competitive-swimmers-racing-in-outdoor-pool-royalty-free-image-1584113727.jpg?crop=1xw:0.75xh;center,top&resize=1200:*" alt="{{ online_form.imageName }}" style="width:350px;">
+        </div>
+    </body>
+</html>

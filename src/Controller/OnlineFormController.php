@@ -2,37 +2,27 @@
 
 namespace App\Controller;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Entity\OnlineForm;
 use App\Form\OnlineFormType;
-use App\Repository\OnlineFormRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\OnlineImageFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Dompdf\Dompdf;
-use Dompdf\Options;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/online/form")
+ * @Route("/formulaire")
  * @IsGranted("ROLE_USER")
  */
 class OnlineFormController extends AbstractController
 {
     /**
-     * @Route("/", name="online_form_index", methods={"GET"})
+     * @Route("/creer/autorisation-parentale", name="online_form_new", methods={"GET","POST"})
      */
-    public function index(OnlineFormRepository $onlineFormRepository): Response
-    {
-        return $this->render('online_form/index.html.twig', [
-            'online_forms' => $onlineFormRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/new", name="online_form_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
+    public function newParentForm(Request $request): Response
     {
         $onlineForm = new OnlineForm();
         $form = $this->createForm(OnlineFormType::class, $onlineForm);
@@ -47,33 +37,45 @@ class OnlineFormController extends AbstractController
             return $this->redirectToRoute('app_document');
         }
 
-        return $this->render('online_form/new.html.twig', [
+        return $this->render('online_form/new_parent.html.twig', [
             'online_form' => $onlineForm,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="online_form_show", methods={"GET"})
+     * @Route("/creer/droit-image", name="online_form_image", methods={"GET","POST"})
      */
-    public function show(OnlineForm $onlineForm): Response
+    public function newImageRight(Request $request): Response
     {
-        return $this->render('online_form/show.html.twig', [
+        $onlineForm = new OnlineForm();
+        $form = $this->createForm(OnlineImageFormType::class, $onlineForm);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $onlineForm->setUser($this->getUser());
+            $entityManager->persist($onlineForm);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_document');
+        }
+
+        return $this->render('online_form/new_image_right.html.twig', [
             'online_form' => $onlineForm,
+            'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/pdf/{id}", name="online_form_pdf", methods={"GET"})
+     * @Route("/pdf/autorisation-parentale/{id}", name="online_form_pdf", methods={"GET"})
      */
     public function generatePdf(OnlineForm $onlineForm): Response
     {
         $pdfOptions = new Options();
-        // $pdfOptions->set('isHtml5ParserEnabled', true);
         $pdfOptions->set('isRemoteEnabled', true);
-        // $pdfOptions->setIsRemoteEnabled(true);
         $dompdf = new Dompdf($pdfOptions);
-        $html = $this->renderView('online_form/pdf.html.twig', [
+        $html = $this->renderView('online_form/pdf/parent_pdf.html.twig', [
             'online_form' => $onlineForm,
         ]);
         $dompdf->loadHtml($html);
@@ -89,22 +91,25 @@ class OnlineFormController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="online_form_edit", methods={"GET","POST"})
+     * @Route("/pdf/droit-image/{id}", name="image_form_pdf", methods={"GET"})
      */
-    public function edit(Request $request, OnlineForm $onlineForm): Response
+    public function generateImagePdf(OnlineForm $onlineForm): Response
     {
-        $form = $this->createForm(OnlineFormType::class, $onlineForm);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('online_form_index');
-        }
-
-        return $this->render('online_form/edit.html.twig', [
+        $pdfOptions = new Options();
+        $pdfOptions->set('isRemoteEnabled', true);
+        $dompdf = new Dompdf($pdfOptions);
+        $html = $this->renderView('online_form/pdf/image_right_pdf.html.twig', [
             'online_form' => $onlineForm,
-            'form' => $form->createView(),
+        ]);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $dompdf->stream("droit image.pdf", [
+            "Attachment" => false
+        ]);
+
+        return $this->render('online_form/show.html.twig', [
+            'online_form' => $onlineForm,
         ]);
     }
 

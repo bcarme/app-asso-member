@@ -149,7 +149,6 @@ class Member
      */
     private $registrations;
 
-
     public function __construct()
     {
         $this->giver = new ArrayCollection();
@@ -465,5 +464,14 @@ class Member
         }
 
         return $this->firstname;
+    }
+
+    public function getAge()
+    {
+        $now = new \DateTime('now');
+        $age = $this->getDateOfBirth();
+        $difference = $now->diff($age);
+
+        return $difference->format('%y ans');
     }
 }

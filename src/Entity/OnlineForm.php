@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=OnlineFormRepository::class)
  * @Vich\Uploadable
- * @UniqueEntity(fields={"member"}, message="Vous avez déjà une autorisation parentale à ce nom")
+ * @UniqueEntity(fields={"member"}, message="Vous avez déjà un document à ce nom")
  */
 class OnlineForm
 {
@@ -36,7 +36,7 @@ class OnlineForm
     private $hasAgreedPhoto;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $hasAgreedTransportation;
 
@@ -119,8 +119,7 @@ class OnlineForm
     private $member;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Le nom est obligatoire")
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Length(
      *      max = 255,
      *      maxMessage = "Votre nom ne doit pas dépasser {{ limit }} caractères de long")

@@ -1,0 +1,31 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}New OnlineForm
+{% endblock %}
+
+{% block body %}
+    <div class="col-6 m-5">
+        <h1 class="mb-4">Droit à l'image</h1>
+
+        {{ form_start(form) }}
+        {{ form_row(form.member) }}
+        <p>- j’accepte/ je n'accepte pas  que le CLUB SPORTIF TEST utilise des photographies de groupe prises lors des activités du Club sur lesquelles je pourrais figurer.</p>
+        {{ form_row(form.hasAgreedPhoto) }}
+        {{ form_row(form.date) }}
+        {% if form_errors(form.imageFile) %}
+            <p id="displayVich" style="padding-top: 68px;"></p>
+        {% else %}
+            <p id="displayVich">
+        {% endif %}
+        {{ form_row(form.imageFile) }}
+        <button class="btn btn-success">{{ button_label|default('Envoyer') }}</button>
+        {{ form_end(form) }}
+
+        <a href="{{ path('app_document') }}" class="btn btn-primary mt-4">Retour à mes documents</a>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('vich') }}
+{% endblock %}

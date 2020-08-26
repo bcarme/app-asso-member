@@ -10,7 +10,7 @@
         <div class="m-3">
             <p>Je soussigné(e):
                 {{ online_form.parentName }}</p>
-            <p>déclare avoir plein exercice de l’autorité parentale et autorise mon enfant:
+            <p>déclare avoir plein exercice de l’autorité parentale sur l'enfant:
                 {{ online_form.member.fullname }}</p>
             <p>né(e) le
                 {{ online_form.member.dateOfBirth|format_datetime('full', 'none', locale='fr') }}</p>
@@ -30,6 +30,15 @@
                     activités du Club sur lesquelles pourrait figurer mon enfant.</p>
             {% endif %}
 
+            {% if online_form.hasAgreedTransportation == true %}
+                <p>- j’autorise mon enfant à effectuer les déplacements avec les responsables du club et les parents accompagnateurs en
+                    voitures particulières, et m’engage également à effectuer au minimum un déplacement au cours de la
+                    saison.</p>
+            {% else %}
+                <p>- je n’autorise pas mon enfant à effectuer les déplacements en
+                    voitures particulières.</p>
+            {% endif %}
+
             <p>- en cas d’accident (dans le cadre d’activités sportives ou au cours des déplacements), j’autorise les
                 responsables du club ainsi que les animateurs sportifs à prendre toutes dispositions d’urgence que
                 nécessiteraient les circonstances.</p>
@@ -40,15 +49,6 @@
             <p>- si, au début d’un entraînement ou lors d’un rendez-vous pour un match, le responsable n’est pas
                 présent (un retard est toujours possible), il est nécessaire d’attendre son arrivée. Les enfants ne doivent
                 pas rester sans surveillance.</p>
-
-            {% if online_form.hasAgreedTransportation == true %}
-                <p>- j’autorise mon enfant à effectuer les déplacements avec les responsables du club et les parents accompagnateurs en
-                    voitures particulières, et m’engage également à effectuer au minimum un déplacement au cours de la
-                    saison.</p>
-            {% else %}
-                <p>- je n’autorise pas mon enfant à effectuer les déplacements en
-                    voitures particulières.</p>
-            {% endif %}
 
             <p>Le
                 {{ online_form.date|format_datetime('full', 'none', locale='fr') }}</p>
