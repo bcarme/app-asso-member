@@ -12,4 +12,12 @@ class BookingRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Booking::class);
     }
+
+    public function findByDateAsc()
+    {
+        $qb = $this->createQueryBuilder('b')
+             ->add('orderBy', 'b.beginAt ASC')
+            ->getQuery();
+        return $qb->execute();
+    }
 }
