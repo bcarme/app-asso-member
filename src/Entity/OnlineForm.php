@@ -85,8 +85,8 @@ class OnlineForm
      * @Vich\UploadableField(mapping="uploads_images", fileNameProperty="imageName", size="imageSize")
      * @Assert\File(
      *     maxSize = "500k",
-     *     mimeTypes = {"image/jpeg", "image/JPEG", "image/png", "image/PNG", "image/jpg", "image/JPG", "application/pdf", "application/x-pdf"},
-     *     mimeTypesMessage = "Seuls les formats JPEG, JPG, PNG et PDF sont acceptés"
+     *     mimeTypes = {"image/jpeg", "image/JPEG", "image/png", "image/PNG", "image/jpg", "image/JPG"},
+     *     mimeTypesMessage = "Seuls les formats JPEG, JPG, PNG sont acceptés"
      * )
      * @Assert\NotBlank(message="La signature est obligatoire")
      * @var File|null

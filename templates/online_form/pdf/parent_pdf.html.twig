@@ -5,9 +5,9 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/flatly/bootstrap.min.css"/>
     </head>
     <body>
-        <h4 class="text-center m-5">AUTORISATION PARENTALE<br>
+        <h4 class="text-center my-4">AUTORISATION PARENTALE<br>
             POUR LES ADHERENTS MINEURS</h4>
-        <div class="m-3">
+        <div class="mt-5 mx-4">
             <p>Je soussigné(e):
                 {{ online_form.parentName }}</p>
             <p>déclare avoir plein exercice de l’autorité parentale sur l'enfant:
@@ -54,8 +54,7 @@
                 {{ online_form.date|format_datetime('full', 'none', locale='fr') }}</p>
 
             <p>Signature</p>
-            {# <img src="{{ absolute_url(vich_uploader_asset(online_form, 'imageFile')) }}" style="width:350px;"> #}
-            {# <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/competitive-swimmers-racing-in-outdoor-pool-royalty-free-image-1584113727.jpg?crop=1xw:0.75xh;center,top&resize=1200:*" alt="{{ online_form.imageName }}" style="width:350px;"> #}
+            <img src="{{ absolute_url(vich_uploader_asset(online_form, 'imageFile')) }}" style="width:150px;" alt="{{ online_form.imageName }}">
         </div>
     </body>
 </html>
