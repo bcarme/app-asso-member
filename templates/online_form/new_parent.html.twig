@@ -1,0 +1,44 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}formulaire d'attestation parentale
+{% endblock %}
+
+{% block body %}
+    <div class="col-7 m-5">
+        <h1 class="mb-4">Formulaire d'attestation parentale</h1>
+        {{ form_start(form) }}
+        {{ form_row(form.parentName) }}
+        <p>déclare avoir plein exercice de l’autorité parentale sur l'enfant:
+        {{ form_row(form.member) }}
+        <p>- j’autorise mon enfant à participer aux diverses manifestations organisées au sein de la section du
+                CLUB SPORTIF TEST qui propose ces activités.</p>
+        <p>- j’accepte/ je n'accepte pas que le CLUB SPORTIF TEST utilise des photographies de groupe prises lors des activités du Club sur lesquelles pourrait figurer mon enfant.</p>
+        {{ form_row(form.hasAgreedPhoto) }}
+        <p>- j’autorise/ je n'autorise pas mon enfant à effectuer les déplacements avec les responsables du club et les parents accompagnateurs en
+                voitures particulières, et m’engage également à effectuer au minimum un déplacement au cours de la
+                saison.</p>
+        {{ form_row(form.hasAgreedTransportation) }}
+        <p>- en cas d’accident (dans le cadre d’activités sportives ou au cours des déplacements), j’autorise les
+                responsables du club ainsi que les animateurs sportifs à prendre toutes dispositions d’urgence que
+                nécessiteraient les circonstances.</p>
+        <p>- je prends note, par ailleurs, que la responsabilité du club peut être engagée seulement pendant les
+                horaires correspondant aux entraînements et aux compétitions.</p>
+        <p>- si, au début d’un entraînement ou lors d’un rendez-vous pour un match, le responsable n’est pas
+                présent (un retard est toujours possible), il est nécessaire d’attendre son arrivée. Les enfants ne doivent
+                pas rester sans surveillance.</p>
+        {{ form_row(form.date) }}
+            {% if form_errors(form.imageFile) %}
+                <p id="displayVich" style="padding-top: 68px;"></p>
+            {% else %}
+                <p id="displayVich">
+            {% endif %}                
+        {{ form_row(form.imageFile) }}
+        <button class="btn btn-success">{{ button_label|default('Envoyer') }}</button>
+        {{ form_end(form) }}
+        <a href="{{ path('app_document') }}" class="btn btn-primary mt-4">Retour à mes documents</a>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('vich') }}
+{% endblock %}

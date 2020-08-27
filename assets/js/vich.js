@@ -1,4 +1,7 @@
-const filePath = document.getElementById('member_imageFile_file') || document.getElementById('document_imageFile_file');
+const filePath = document.getElementById('member_imageFile_file') 
+|| document.getElementById('document_imageFile_file') 
+|| document.getElementById('online_form_imageFile_file') 
+|| document.getElementById('online_image_form_imageFile_file');
 
 function displayImageName() {
     if (filePath.value !== '') {

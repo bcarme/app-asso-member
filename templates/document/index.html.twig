@@ -6,53 +6,97 @@
 {% block body %}
     <div class="container-fluid p-5">
         <h1>Mes documents</h1>
-        <div class="mt-5 col-6">
-            {{ form_start(form) }}
-            {{ form_row(form.member) }}
-                {% if form_errors(form.imageFile) %}
-                    <p id="displayVich" style="padding-top: 68px;"></p>
-                {% else %}
-                    <p id="displayVich">
-                {% endif %}
-            {{ form_row(form.imageFile) }}
-            <button class="btn btn-lg btn-primary mt-2">Envoyer</button>
-            {{ form_end(form) }}
-        </div>
+        {{ include('document/_form.html.twig') }}
 
-        <div class="col-6">
-            {% for member in members %}
-                {% if is_granted('SHOW', member) %}
-                    
-                <h2 class="mt-5">{{ member.fullname }}</h2>
-                   
-                    <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>Documents</th>
-                                <th>action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for document in documents %}
-                                {% if is_granted('SHOW', document) and member.id == document.member.id %}
-                                    <tr>
-                                        <td>{{ document.imageName }}</td>
-                                        <td>
-                                        {% if is_granted('DELETE', document) %}
-                                            {{ include('document/_delete_form.html.twig') }}
+        {% for member in members %}
+            {% if is_granted('SHOW', member) %}
+                <div class="row">
+                    <div class="col-6">
+                        <h2 class="mt-5">{{ member.fullname }}</h2>
+                        <table class="table">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Documents</th>
+                                    <th colspan="2">actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for document in documents %}
+                                    {% if is_granted('SHOW', document) and member.id == document.member.id %}
+                                        <tr>
+                                            <td>Attestation médicale</td>
+                                            <td></td>
+                                            <td>
+                                                {% if is_granted('DELETE', document) %}
+                                                    {{ include('document/_delete_form.html.twig') }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                {% for online_form in online_forms %}
+                                    {% if member.id == online_form.member.id %}
+                                        {% if member.age < 18 %}
+                                            <tr>
+                                                <td>Autorisation parentale</td>
+                                                <td>
+                                                    <a href="{{ path('online_form_pdf', {'id': online_form.id}) }}" class="btn btn-success">
+                                                        <i class="far fa-file-pdf mr-2"></i>PDF</a>
+                                                </td>
+                                                <td>
+                                                    {% if is_granted('DELETE', online_form) %}
+                                                        {{ include('online_form/_delete_form.html.twig') }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td>Droit à l'image</td>
+                                                <td>
+                                                    <a href="{{ path('image_form_pdf', {'id': online_form.id}) }}" class="btn btn-success">
+                                                        <i class="far fa-file-pdf mr-2"></i>PDF</a>
+                                                </td>
+                                                <td>
+                                                    {% if is_granted('DELETE', online_form) %}
+                                                        {{ include('online_form/_delete_form.html.twig') }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
                                         {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-6">
+                        <h2 class="mt-5">Documents à remplir en ligne</h2>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    {% if member.age < 18 %}
+                                        <td>
+                                            <a href="{{ path('online_form_new') }}" class="btn btn-primary">
+                                                <i class="far fa-edit mr-2"></i>L'autorisation parentale</a>
                                         </td>
-                                    </tr>    
-                                {% endif %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    
-                {% endif %}
-            {% endfor %}
-        </div>
+                                    {% else %}
+                                        <td>
+                                            <a href="{{ path('online_form_image') }}" class="btn btn-success">
+                                                <i class="far fa-edit mr-2"></i>Droit à l'image</a>
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
 {% endblock %}
+
 {% block javascripts %}
+    {{ parent() }}
     {{ encore_entry_script_tags('vich') }}
 {% endblock %}

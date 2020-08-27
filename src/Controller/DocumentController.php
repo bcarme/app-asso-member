@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Document;
+use App\Entity\OnlineForm;
 use App\Form\DocumentType;
 use App\Repository\MemberRepository;
 use App\Repository\DocumentRepository;
+use App\Repository\OnlineFormRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +23,7 @@ class DocumentController extends AbstractController
     /**
      * @Route("/", name="app_document", methods={"GET","POST"})
      */
-    public function index(MemberRepository $memberRepository, DocumentRepository $documentRepository, Request $request): Response
+    public function index(MemberRepository $memberRepository, DocumentRepository $documentRepository, Request $request, OnlineFormRepository $onlineFormRepository): Response
     {
         $document = new Document();
         $form = $this->createForm(DocumentType::class, $document);
@@ -41,6 +43,7 @@ class DocumentController extends AbstractController
             'document' => $document,
             'form' => $form->createView(),
             'members' => $memberRepository->findAll(),
+            'online_forms' => $onlineFormRepository->findAll(),
         ]);
     }
 

@@ -7,10 +7,13 @@ use App\Repository\OnlineFormRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=OnlineFormRepository::class)
  * @Vich\Uploadable
+ * @UniqueEntity(fields={"member"}, message="Vous avez déjà un document à ce nom")
  */
 class OnlineForm
 {
@@ -23,6 +26,7 @@ class OnlineForm
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank(message="La date est obligatoire")
      */
     private $date;
 
@@ -32,7 +36,7 @@ class OnlineForm
     private $hasAgreedPhoto;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $hasAgreedTransportation;
 
@@ -78,17 +82,19 @@ class OnlineForm
     }
 
     /**
-     * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     * 
-     * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName", size="imageSize")
-     * 
+     * @Vich\UploadableField(mapping="uploads_images", fileNameProperty="imageName", size="imageSize")
+     * @Assert\File(
+     *     maxSize = "500k",
+     *     mimeTypes = {"image/jpeg", "image/JPEG", "image/png", "image/PNG", "image/jpg", "image/JPG"},
+     *     mimeTypesMessage = "Seuls les formats JPEG, JPG, PNG sont acceptés"
+     * )
+     * @Assert\NotBlank(message="La signature est obligatoire")
      * @var File|null
      */
     private $imageFile;
 
     /**
      * @ORM\Column(type="string")
-     *
      * @var string|null
      */
     private $imageName;
@@ -108,17 +114,25 @@ class OnlineForm
     private $updatedAt;
 
     /**
-     * @ORM\OneToOne(targetEntity=Member::class, inversedBy="onlineForm", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Member::class, inversedBy="onlineForm")
      */
     private $member;
 
     /**
-     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
-     * of 'UploadedFile' is injected into this setter to trigger the update. If this
-     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
-     * must be able to accept an instance of 'File' as the bundle will inject one here
-     * during Doctrine hydration.
-     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "Votre nom ne doit pas dépasser {{ limit }} caractères de long")
+     */
+    private $parentName;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="onlineForms")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
      */
     public function setImageFile(?File $imageFile = null): void
@@ -126,8 +140,6 @@ class OnlineForm
         $this->imageFile = $imageFile;
 
         if (null !== $imageFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
             $this->updatedAt = new DateTime('now');
         }
     }
@@ -146,7 +158,7 @@ class OnlineForm
     {
         return $this->imageName;
     }
-    
+
     public function setImageSize(?int $imageSize): void
     {
         $this->imageSize = $imageSize;
@@ -165,6 +177,30 @@ class OnlineForm
     public function setMember(?Member $member): self
     {
         $this->member = $member;
+
+        return $this;
+    }
+
+    public function getParentName(): ?string
+    {
+        return $this->parentName;
+    }
+
+    public function setParentName(string $parentName): self
+    {
+        $this->parentName = $parentName;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
