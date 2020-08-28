@@ -1,0 +1,36 @@
+{% extends 'layoutAdmin.html.twig' %}
+
+{% block title %}Liste des comptes rendus{% endblock %}
+
+{% block body %}
+<div class="container-fluid p-5">
+    <h1>Liste des comptes rendus</h1>
+    <a href="{{ path('report_new') }}" class ="btn btn-primary mb-4">Ajouter<i class="fas fa-plus ml-2"></i></a>
+
+    <table class="table table-striped mt-5">
+        <thead class="thead-dark">
+            <tr>
+                <th>Compte rendu</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for report in reports %}
+            <tr>
+                <td>{{ report.title }}</td>
+                <td class="d-flex">
+                    <a href="{{ path('report_show', {'id': report.id}) }}" class="btn btn-success mr-4">Voir<i class="fas fa-eye ml-1"></i></a>
+                    <div>
+                        {{ include('admin/report/_delete_form.html.twig') }}
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">aucune compte rendu trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

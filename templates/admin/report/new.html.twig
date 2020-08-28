@@ -1,0 +1,23 @@
+{% extends 'layoutAdmin.html.twig' %}
+
+{% block title %}Ajouter un compte rendu{% endblock %}
+
+{% block body %}
+<div class="container-fluid p-5 justify-content-start">
+    <h1>Ajouter un compte rendu</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        {% if form_errors(form.imageFile) %}
+            <p id="displayVich" style="padding-top: 68px;"></p>
+        {% else %}
+            <p id="displayVich"></p>
+        {% endif %}
+          {{ form_row(form.imageFile) }}
+          <button class="btn btn-primary mt-2">Ajouter</button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('vich') }}
+{% endblock %}
