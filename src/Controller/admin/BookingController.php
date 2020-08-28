@@ -74,9 +74,12 @@ class BookingController extends AbstractController
     {
         $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);
+
        
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            
+      
             $email = (new Email())
                 ->from($this->getParameter('mailer_from'))
                 ->to($this->getParameter('mailer_from'))
