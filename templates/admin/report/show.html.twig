@@ -1,0 +1,15 @@
+{% extends 'layoutAdmin.html.twig' %}
+
+{% block title %}Compte rendu
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid p-5">
+        <h1>Compte rendu: {{ report.title }}</h1>
+        <div class="d-flex mb-3">
+            <a href="{{ path('report_index') }}" class="btn btn-secondary mr-5">Retour à la liste</a>
+            {{ include('admin/report/_delete_form.html.twig') }}
+        </div>
+        <embed src="{{ vich_uploader_asset(report, 'imageFile') }}" width="1200" height="700" type='application/pdf'>
+    </div>
+{% endblock %}
