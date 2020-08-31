@@ -16,7 +16,11 @@
           {{ form_row(form.town) }}
           {{ form_row(form.zipCode) }}
           {{ form_row(form.jobType) }}
-          <p id="displayVich"></p>
+          {% if form_errors(form.imageFile) %}
+          <p id="displayVich" style="padding-top: 68px;"></p>
+          {% else %}
+         <p id="displayVich"></p>
+         {% endif %}
           {{ form_row(form.imageFile) }}
           <button class="btn btn-lg btn-primary mt-2">Ajouter</button>
         {{ form_end(form) }}
