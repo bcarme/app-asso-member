@@ -27,6 +27,7 @@ class User implements UserInterface
         $this->registrations = new ArrayCollection();
         $this->documents = new ArrayCollection();
         $this->onlineForms = new ArrayCollection();
+        $this->workers = new ArrayCollection();
     }
     /**
      * @ORM\Id()
@@ -93,6 +94,11 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity=OnlineForm::class, mappedBy="user")
      */
     private $onlineForms;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Worker::class, mappedBy="user")
+     */
+    private $workers;
 
     public function getId(): ?int
     {
@@ -314,6 +320,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($onlineForm->getUser() === $this) {
                 $onlineForm->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Worker[]
+     */
+    public function getWorkers(): Collection
+    {
+        return $this->workers;
+    }
+
+    public function addWorker(Worker $worker): self
+    {
+        if (!$this->workers->contains($worker)) {
+            $this->workers[] = $worker;
+            $worker->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWorker(Worker $worker): self
+    {
+        if ($this->workers->contains($worker)) {
+            $this->workers->removeElement($worker);
+            // set the owning side to null (unless already changed)
+            if ($worker->getUser() === $this) {
+                $worker->setUser(null);
             }
         }
 

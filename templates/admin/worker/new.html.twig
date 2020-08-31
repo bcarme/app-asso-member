@@ -1,0 +1,28 @@
+{% extends 'layoutAdmin.html.twig' %}
+
+{% block title %}Ajouter un nouveau collaborateur{% endblock %}
+
+{% block body %}
+ <div class="container-fluid p-5 justify-content-start">
+
+    <h1>Ajouter un nouveau collaborateur</h1>
+
+    {{ form_start(form) }}
+          {{ form_row(form.firstname) }}
+          {{ form_row(form.lastname) }}
+          {{ form_row(form.email) }}
+          {{ form_row(form.phone) }}
+          {{ form_row(form.address) }}
+          {{ form_row(form.town) }}
+          {{ form_row(form.zipCode) }}
+          {{ form_row(form.jobType) }}
+          <p id="displayVich"></p>
+          {{ form_row(form.imageFile) }}
+          <button class="btn btn-lg btn-primary mt-2">Ajouter</button>
+        {{ form_end(form) }}
+
+    <div>
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('vich') }}
+{% endblock %}
