@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 /**
  * @Route("admin/planning")
@@ -22,7 +24,7 @@ class BookingController extends AbstractController
     public function index(BookingRepository $bookingRepository): Response
     {
         return $this->render('admin/booking/index.html.twig', [
-            'bookings' => $bookingRepository->findAll(),
+            'bookings' => $bookingRepository->findByDateAsc(),
         ]);
     }
 
@@ -40,7 +42,10 @@ class BookingController extends AbstractController
             $entityManager->persist($booking);
             $entityManager->flush();
 
+            $this->addFlash('success', 'L\'évenement a bien été créé');
+
             return $this->redirectToRoute('booking_index');
+
         }
 
         return $this->render('admin/booking/new.html.twig', [
@@ -61,14 +66,27 @@ class BookingController extends AbstractController
 
     /**
      * @Route("/{id}/editer", name="booking_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param MailerInterface $mailer
+     * @return Response
      */
-    public function edit(Request $request, Booking $booking): Response
+    public function edit(Request $request, Booking $booking, MailerInterface $mailer): Response
     {
         $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);
 
+       
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            
+      
+            $email = (new Email())
+                ->from($this->getParameter('mailer_from'))
+                ->to($this->getParameter('mailer_from'))
+                ->subject('Un cours a été déplacé')
+                ->html($this->renderView('emails/_notification.html.twig', [ 'booking' => $booking]));
+            $mailer->send($email);
+            $this->addFlash('success', 'L\'événement a bien été mis à jour');
 
             return $this->redirectToRoute('booking_index');
         }
@@ -81,13 +99,26 @@ class BookingController extends AbstractController
 
     /**
      * @Route("/{id}", name="booking_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param MailerInterface $mailer
+     * @return Response
      */
-    public function delete(Request $request, Booking $booking): Response
+    public function delete(Request $request, Booking $booking, MailerInterface $mailer): Response
     {
         if ($this->isCsrfTokenValid('delete'.$booking->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($booking);
             $entityManager->flush();
+
+            $this->addFlash('error', 'L\'évenement a bien été supprimé');
+
+            $email = (new Email())
+            ->from($this->getParameter('mailer_from'))
+            ->to($this->getParameter('mailer_from'))
+            ->subject('Un cours a été annulé')
+            ->html($this->renderView('emails/_cancel.html.twig', [ 'booking' => $booking]));
+            $mailer->send($email);
+  
         }
 
         return $this->redirectToRoute('booking_index');

@@ -119,7 +119,7 @@ class Booking
     private $capacity;
 
     /**
-     * @ORM\OneToMany(targetEntity=Registration::class, mappedBy="booking")
+     * @ORM\OneToMany(targetEntity=Registration::class, mappedBy="booking", cascade={"persist", "remove"}))
      */
     private $registrations;
 
