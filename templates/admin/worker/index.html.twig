@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Worker index{% endblock %}
+
+{% block body %}
+    <h1>Worker index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Town</th>
+                <th>Zipcode</th>
+                <th>Jobtype</th>
+                <th>ImageName</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for worker in workers %}
+            <tr>
+                <td>{{ worker.id }}</td>
+                <td>{{ worker.firstname }}</td>
+                <td>{{ worker.lastname }}</td>
+                <td>{{ worker.email }}</td>
+                <td>{{ worker.phone }}</td>
+                <td>{{ worker.address }}</td>
+                <td>{{ worker.town }}</td>
+                <td>{{ worker.zipcode }}</td>
+                <td>{{ worker.jobtype }}</td>
+                <td>{{ worker.imageName }}</td>
+                <td>{{ worker.updatedAt ? worker.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('worker_show', {'id': worker.id}) }}">show</a>
+                    <a href="{{ path('worker_edit', {'id': worker.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('worker_new') }}">Create new</a>
+{% endblock %}
