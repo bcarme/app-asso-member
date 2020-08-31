@@ -1,13 +1,16 @@
-{% extends 'base.html.twig' %}
+{% extends 'layoutAdmin.html.twig' %}
 
-{% block title %}Edit Worker{% endblock %}
+{% block title %}Modifier le collaborateur{% endblock %}
 
 {% block body %}
-    <h1>Edit Worker</h1>
+  <div class="container-fluid p-5">
+  <h1>Modifier le collaborateur</h1>
+  <div class="mb-3">
+    <a href="{{ path('worker_index') }}" class="btn btn-secondary mr-5">Retour à la liste</a>
+  </div>
+   <div class="mt-5">
+    {{ include('worker/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+   </div>
+</div>
 
-    {{ include('worker/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('worker_index') }}">back to list</a>
-
-    {{ include('worker/_delete_form.html.twig') }}
 {% endblock %}
