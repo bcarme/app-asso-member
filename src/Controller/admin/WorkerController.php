@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\admin;
 
 use App\Entity\Worker;
 use App\Form\WorkerType;
@@ -26,7 +26,7 @@ class WorkerController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="worker_new", methods={"GET","POST"})
+     * @Route("/ajouter", name="worker_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -59,7 +59,7 @@ class WorkerController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="worker_edit", methods={"GET","POST"})
+     * @Route("/{id}/editer", name="worker_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Worker $worker): Response
     {

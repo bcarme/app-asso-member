@@ -9,8 +9,23 @@
     <a href="{{ path('worker_index') }}" class="btn btn-secondary mr-5">Retour à la liste</a>
   </div>
    <div class="mt-5">
-    {{ include('worker/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+        {{ form_start(form) }}
+          {{ form_row(form.firstname) }}
+          {{ form_row(form.lastname) }}
+          {{ form_row(form.email) }}
+          {{ form_row(form.phone) }}
+          {{ form_row(form.address) }}
+          {{ form_row(form.town) }}
+          {{ form_row(form.zipCode) }}
+          {{ form_row(form.jobType) }}
+          <p id="displayVich"></p>
+          {{ form_row(form.imageFile) }}
+          <button class="btn btn-lg btn-primary mt-2">Mettre à jour</button>
+        {{ form_end(form) }}
    </div>
 </div>
 
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('vich') }}
 {% endblock %}

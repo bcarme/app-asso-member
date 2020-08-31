@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=WorkerRepository::class)
+ * @Vich\Uploadable
  */
 class Worker
 {
@@ -25,41 +26,69 @@ class Worker
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le prénom est obligatoire")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "Votre prénom ne doit pas dépasser {{ limit }} caractères de long")
      */
     private $firstname;
 
-    /**
+  /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le nom est obligatoire !")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "Votre nom ne doit pas dépasser {{ limit }} caractères de long")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="L'adresse mail est obligatoire")
+     * @Assert\Email(message="Format d'adresse invalide")
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=20)
+     * @Assert\Length(min = 8, max = 20)
+     * @Assert\Regex(pattern="/^[0-9]*$/", message="Il faut des numéros uniquement") 
+     * @Assert\NotBlank(message="Le numéro de téléphone est obligatoire")
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="L'adresse est obligatoire")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "Votre adresse ne doit pas dépasser {{ limit }} caractères de long")
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="La ville est obligatoire")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "Votre ville ne doit pas dépasser {{ limit }} caractères de long")
      */
     private $town;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Length(min = 2, max = 10)
+     * @Assert\Regex(pattern="/^[0-9]*$/", message="Il faut des chiffres uniquement") 
+     * @Assert\NotBlank(message="Le code postal est obligatoire")
      */
     private $zipcode;
 
-    /**
+  /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="La fonction est obligatoire !")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "La fonction ne doit pas dépasser {{ limit }} caractères de long")
      */
     private $jobtype;
 
