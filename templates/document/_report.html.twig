@@ -1,0 +1,8 @@
+<h2>Consulter les documents</h2>
+{% for report in reports %}
+    <div class="d-flex">
+        <a href="{{ path('document_report_show', {'id': report.id}) }}" class="btn pdf my-1">
+            {{ report.title }}<i class="far fa-file-pdf ml-2"></i>
+        </a>
+    </div>
+{% endfor %}

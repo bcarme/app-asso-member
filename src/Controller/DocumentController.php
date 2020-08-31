@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Report;
 use App\Entity\Document;
-use App\Entity\OnlineForm;
 use App\Form\DocumentType;
 use App\Repository\MemberRepository;
+use App\Repository\ReportRepository;
 use App\Repository\DocumentRepository;
 use App\Repository\OnlineFormRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +24,13 @@ class DocumentController extends AbstractController
     /**
      * @Route("/", name="app_document", methods={"GET","POST"})
      */
-    public function index(MemberRepository $memberRepository, DocumentRepository $documentRepository, Request $request, OnlineFormRepository $onlineFormRepository): Response
+    public function index(
+        MemberRepository $memberRepository, 
+        DocumentRepository $documentRepository, 
+        OnlineFormRepository $onlineFormRepository,
+        ReportRepository $reportRepository ,
+        Request $request 
+        ): Response
     {
         $document = new Document();
         $form = $this->createForm(DocumentType::class, $document);
@@ -44,6 +51,7 @@ class DocumentController extends AbstractController
             'form' => $form->createView(),
             'members' => $memberRepository->findAll(),
             'online_forms' => $onlineFormRepository->findAll(),
+            'reports' => $reportRepository->findById(),
         ]);
     }
 
@@ -61,5 +69,15 @@ class DocumentController extends AbstractController
         }
 
         return $this->redirectToRoute('app_document');
+    }
+
+    /**
+     * @Route("/compte-rendu/{id}", name="document_report_show", methods={"GET"})
+     */
+    public function show(Report $report): Response
+    {
+        return $this->render('document/show.html.twig', [
+            'report' => $report,
+        ]);
     }
 }
