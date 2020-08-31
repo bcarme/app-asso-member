@@ -6,7 +6,16 @@
 {% block body %}
     <div class="container-fluid p-5">
         <h1>Mes documents</h1>
+        <div class="row">
+<div class="col-4">
         {{ include('document/_form.html.twig') }}
+
+</div>
+<div class="col-6 offset-2">
+        {{ include('document/_report.html.twig') }}
+
+</div>
+        </div>
 
         {% for member in members %}
             {% if is_granted('SHOW', member) %}
@@ -34,14 +43,14 @@
                                         </tr>
                                     {% endif %}
                                 {% endfor %}
+                                
                                 {% for online_form in online_forms %}
-                                    {% if member.id == online_form.member.id %}
-                                        {% if member.age < 18 %}
+                                    {% if member.id == online_form.member.id and member.age < 18%}
                                             <tr>
                                                 <td>Autorisation parentale</td>
                                                 <td>
-                                                    <a href="{{ path('online_form_pdf', {'id': online_form.id}) }}" class="btn btn-success">
-                                                        <i class="far fa-file-pdf mr-2"></i>PDF</a>
+                                                    <a href="{{ path('online_form_pdf', {'id': online_form.id}) }}" class="btn pdf">
+                                                        PDF<i class="far fa-file-pdf ml-2"></i></a>
                                                 </td>
                                                 <td>
                                                     {% if is_granted('DELETE', online_form) %}
@@ -49,12 +58,12 @@
                                                     {% endif %}
                                                 </td>
                                             </tr>
-                                        {% else %}
+                                    {% elseif member.age > 18 %}
                                             <tr>
                                                 <td>Droit à l'image</td>
                                                 <td>
-                                                    <a href="{{ path('image_form_pdf', {'id': online_form.id}) }}" class="btn btn-success">
-                                                        <i class="far fa-file-pdf mr-2"></i>PDF</a>
+                                                    <a href="{{ path('image_form_pdf', {'id': online_form.id}) }}" class="btn pdf">
+                                                        PDF<i class="far fa-file-pdf ml-2"></i></a>
                                                 </td>
                                                 <td>
                                                     {% if is_granted('DELETE', online_form) %}
@@ -62,7 +71,6 @@
                                                     {% endif %}
                                                 </td>
                                             </tr>
-                                        {% endif %}
                                     {% endif %}
                                 {% endfor %}
                             </tbody>
