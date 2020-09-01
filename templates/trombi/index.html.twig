@@ -1,48 +1,40 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Trombinoscope
-{% endblock %}
+{% block title %}Trombinoscope{% endblock %}
 
 {% block body %}
-    <div class="container-fluid p-5">
-        <h1 class="pb-3">Trombinoscope du club</h1>
-        <div class="container wrap">
-            {{ form_start(form, {'attr': {'class': 'search' }}) }}
-            {{ form_widget(form.search, {'attr': {'class': 'searchTerm' }}) }}
-            <button type="submit" class="searchButton">
-                <i class="fa fa-search"></i>
+<div class="container-fluid p-5">
+    <h1 class="pb-3">Trombinoscope du club</h1>
+    <div class="container wrap">
+    {{ form_start(form, {'attr': {'class': 'search'}}) }}
+        {{ form_widget(form.search, {'attr': {'class': 'searchTerm'}}) }}
+             <button type="submit" class="searchButton">
+                 <i class="fa fa-search"></i>
             </button>
-            <a href="{{ path('app_trombi') }}">
-                <i class="fa fa-times-circle fa-2x ml-3"></i>
-            </a>
-            {{ form_end(form) }}
-        </div>
-        <div class="container pt-3">
-            {% for member in page %}
-                <div class="row border justify-content-start lineTrombi">
-                    <div class="col-2">
-                    {% if member.age > 18 %}
-                        <img class="imgTrombi" src="{{ vich_uploader_asset(member, 'imageFile') }}" alt="card image">
-                        
-                       {% endif %} 
-                        </div>
-                        <div class="col-4">
-                            <h5 class="font-weight-bold pt-5 pl-5">{{ member.lastname |upper }}
-                                {{ member.firstname |capitalize }}
-                            </h5>
-                        </div>
-                        <div class="col-6 d-flex justify-content-end align-items-center">
-                            <i class="fas fa-envelope fa-3x pr-5"></i>
-                        </div>
-                    </div>
-            {% else %}
-                    <p class"pb-5">résultat non trouvé</p>
-                    <a href="{{ path('app_trombi') }}" class="btn btn-secondary">Retour</a>
-            {% endfor %}
-            </div>
-            <div class="p-5">
-                {{ knp_pagination_render(page) }}
-            </div>
-        </div>
+           <a href="{{ path('app_trombi') }}"><i class="fa fa-times-circle fa-2x ml-3"></i></a>
+    {{ form_end(form) }}
     </div>
+  <div class="container pt-3">
+ {% for member in page %}
+    <div class="row border justify-content-start lineTrombi">
+      <div class="col-2">
+        <img class="imgTrombi" src="{{ vich_uploader_asset(member, 'imageFile') }}" alt="card image">
+      </div>
+      <div class="col-4">
+        <h5 class="font-weight-bold pt-5 pl-5">{{member.lastname |upper }} {{member.firstname |capitalize }} </h5>
+      </div>
+      <div class="col-6 d-flex justify-content-end align-items-center">
+        <i class="fas fa-envelope fa-3x pr-5"></i>
+      </div>
+    </div>
+            {% else %}
+            <p class"pb-5">résultat non trouvé</p>
+            <a href="{{ path('app_trombi') }}" class="btn btn-secondary">Retour</a>
+      {% endfor %}
+       </div>
+           <div class="p-5">
+             {{ knp_pagination_render(page) }}
+           </div>
+ </div>
+ </div>
 {% endblock %}
