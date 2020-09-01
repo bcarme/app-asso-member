@@ -20,17 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class ConductController extends AbstractController
 {
     /**
-     * @Route("/", name="conduct_index", methods={"GET"})
-     */
-    public function index(ConductRepository $conductRepository): Response
-    {
-        return $this->render('conduct/index.html.twig', [
-            'conducts' => $conductRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/completer", name="conduct_new", methods={"GET","POST"})
+     * @Route("/signer", name="conduct_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -44,7 +34,7 @@ class ConductController extends AbstractController
             $entityManager->persist($conduct);
             $entityManager->flush();
 
-            return $this->redirectToRoute('conduct_index');
+            return $this->redirectToRoute('app_document');
         }
 
         return $this->render('conduct/new.html.twig', [
@@ -75,26 +65,6 @@ class ConductController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="conduct_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Conduct $conduct): Response
-    {
-        $form = $this->createForm(ConductType::class, $conduct);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('conduct_index');
-        }
-
-        return $this->render('conduct/edit.html.twig', [
-            'conduct' => $conduct,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
      * @Route("/{id}", name="conduct_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Conduct $conduct): Response
@@ -107,6 +77,6 @@ class ConductController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('conduct_index');
+        return $this->redirectToRoute('app_document');
     }
 }

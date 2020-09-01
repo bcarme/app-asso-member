@@ -1,13 +1,27 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}New Conduct{% endblock %}
+{% block title %}Signer charte bonnne conduite
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Conduct</h1>
-
-    {{ include('conduct/_form.html.twig') }}
-
-    <a href="{{ path('conduct_index') }}">back to list</a>
+    <h1 class="m-5">Signer la charte de bonne conduite</h1>
+    <div class="col-6 m-5">
+        <div>
+            {{ form_start(form) }}
+            {{ form_row(form.member) }}
+                <p>- Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis natus voluptas amet in nulla fugit culpa? Dolorum quidem distinctio, consectetur voluptatum totam soluta aspernatur recusandae. Hic ullam quod dignissimos distinctio!</p>
+            {{ form_row(form.date) }}
+            {% if form_errors(form.imageFile) %}
+                <p id="displayVich" style="padding-top: 68px;"></p>
+            {% else %}
+                <p id="displayVich"></p>
+            {% endif %}
+            {{ form_row(form.imageFile) }}
+            <button class="btn btn-success">Envoyer</button>
+            {{ form_end(form) }}
+        </div>
+        <a href="{{ path('app_document') }}" class="btn btn-primary mt-4">Retour à mes documents</a>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
