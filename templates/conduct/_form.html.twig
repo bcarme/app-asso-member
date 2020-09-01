@@ -1,0 +1,14 @@
+<div>
+    {{ form_start(form) }}
+    {{ form_row(form.member) }}
+    {{ form_row(form.date) }}
+        {% if form_errors(form.imageFile) %}
+            <p id="displayVich" style="padding-top: 68px;"></p>
+        {% else %}
+            <p id="displayVich"></p>
+        {% endif %}
+    {{ form_row(form.imageFile) }}
+    <button class="btn btn-primary mt-2">Envoyer</button>
+    {{ form_end(form) }}
+</div>
+

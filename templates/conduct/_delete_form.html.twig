@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('conduct_delete', {'id': conduct.id}) }}" onsubmit="return confirm('Voulez-vous supprimer la charte de bonne conduite ?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ conduct.id) }}">
+    <button class="btn btn-danger">Supprimer<i class="far fa-trash-alt ml-2"></i></button>
+</form>

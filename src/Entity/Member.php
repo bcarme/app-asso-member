@@ -135,14 +135,19 @@ class Member
     private $receiver;
 
     /**
-     * @ORM\OneToMany(targetEntity=Document::class, mappedBy="member")
+     * @ORM\OneToMany(targetEntity=Document::class, mappedBy="member", cascade={"persist", "remove"})
      */
     private $documents;
 
     /**
-     * @ORM\OneToMany(targetEntity=Registration::class, mappedBy="member")
+     * @ORM\OneToMany(targetEntity=Registration::class, mappedBy="member", cascade={"persist", "remove"})
      */
     private $registrations;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Conduct::class, mappedBy="member", cascade={"persist", "remove"})
+     */
+    private $conduct;
 
     public function __construct()
     {
@@ -457,5 +462,22 @@ class Member
         $difference = $now->diff($age);
 
         return $difference->format('%y ans');
+    }
+
+    public function getConduct(): ?Conduct
+    {
+        return $this->conduct;
+    }
+
+    public function setConduct(Conduct $conduct): self
+    {
+        $this->conduct = $conduct;
+
+        // set the owning side of the relation if necessary
+        if ($conduct->getMember() !== $this) {
+            $conduct->setMember($this);
+        }
+
+        return $this;
     }
 }

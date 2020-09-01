@@ -72,6 +72,8 @@ class OnlineFormController extends AbstractController
      */
     public function generatePdf(OnlineForm $onlineForm): Response
     {
+        $this->denyAccessUnlessGranted('SHOW', $onlineForm);
+
         $pdfOptions = new Options();
         $pdfOptions->set('isRemoteEnabled', true);
         $dompdf = new Dompdf($pdfOptions);
@@ -95,6 +97,8 @@ class OnlineFormController extends AbstractController
      */
     public function generateImagePdf(OnlineForm $onlineForm): Response
     {
+        $this->denyAccessUnlessGranted('SHOW', $onlineForm);
+
         $pdfOptions = new Options();
         $pdfOptions->set('isRemoteEnabled', true);
         $dompdf = new Dompdf($pdfOptions);

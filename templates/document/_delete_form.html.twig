@@ -1,5 +1,5 @@
 <form method="post" action="{{ path('document_delete', {'id': document.id}) }}" onsubmit="return confirm('Voulez-vous supprimer l\'attestation médicale ?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ document.id) }}">
-    <button class="btn btn-danger"><i class="far fa-trash-alt mr-2"></i>Supprimer</button>
+    <button class="btn btn-danger">Supprimer<i class="far fa-trash-alt ml-2"></i></button>
 </form>

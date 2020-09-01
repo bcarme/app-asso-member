@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Charte de bonne conduitee</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/flatly/bootstrap.min.css"/>
+    </head>
+    <body>
+        <h4 class="text-center m-5">CHARTE DE BONNE CONDUITE</h4>
+        <div class="m-5">
+        <p>Je soussigné(e): {{ conduct.member.fullname }}</p>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis natus voluptas amet in nulla fugit culpa? Dolorum quidem distinctio, consectetur voluptatum totam soluta aspernatur recusandae. Hic ullam quod dignissimos distinctio!</p>
+            <p>Le
+                {{ conduct.date|format_datetime('full', 'none', locale='fr') }}</p>
+
+            <p>Signature</p>
+            <img src="{{ absolute_url(vich_uploader_asset(conduct, 'imageFile')) }}" alt="{{ conduct.imageName }}" style="width:150px;">
+        </div>
+    </body>
+</html>

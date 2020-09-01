@@ -1,0 +1,37 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Conduct index{% endblock %}
+
+{% block body %}
+    <h1>Conduct index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>ImageName</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for conduct in conducts %}
+            <tr>
+                <td>{{ conduct.id }}</td>
+                <td>{{ conduct.date ? conduct.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ conduct.imageName }}</td>
+                <td>
+                    <a href="{{ path('conduct_show', {'id': conduct.id}) }}">show</a>
+                    <a href="{{ path('conduct_edit', {'id': conduct.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('conduct_new') }}">Create new</a>
+{% endblock %}
