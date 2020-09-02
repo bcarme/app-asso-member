@@ -18,7 +18,7 @@
  {% for member in page %}
     <div class="row border justify-content-start lineTrombi">
       <div class="col-2">
-        {% if member.age < 18 %}
+        {% if member.age < 18 or member.hasAgreedPhoto == false %}
         <img class="imgTrombi" src="{{ asset('build/images/Portrait_Placeholder.png') }}" alt=" image de {{member.lastname |upper }} {{member.firstname |capitalize }} ">
         {% else %}
        <img class="imgTrombi" src="{{ vich_uploader_asset(member, 'imageFile') }}" alt="image de {{member.lastname |upper }} {{member.firstname |capitalize }}">

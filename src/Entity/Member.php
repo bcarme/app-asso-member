@@ -149,6 +149,11 @@ class Member
      */
     private $job;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $hasAgreedPhoto;
+
     public function __construct()
     {
         $this->giver = new ArrayCollection();
@@ -472,6 +477,18 @@ class Member
     public function setJob(?string $job): self
     {
         $this->job = $job;
+
+        return $this;
+    }
+
+    public function getHasAgreedPhoto(): ?bool
+    {
+        return $this->hasAgreedPhoto;
+    }
+
+    public function setHasAgreedPhoto(bool $hasAgreedPhoto): self
+    {
+        $this->hasAgreedPhoto = $hasAgreedPhoto;
 
         return $this;
     }
