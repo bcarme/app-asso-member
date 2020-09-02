@@ -10,14 +10,20 @@
     {{ form_start(form) }}
           {{ form_row(form.firstname) }}
           {{ form_row(form.lastname) }}
+           {{ form_row(form.dateOfBirth) }}
           {{ form_row(form.email) }}
           {{ form_row(form.phone) }}
           {{ form_row(form.address) }}
+          {{ form_row(form.cityCode) }}
           {{ form_row(form.town) }}
-          {{ form_row(form.zipCode) }}
-          {{ form_row(form.jobType) }}
-          <p id="displayVich"></p>
+          {{ form_row(form.job) }}
+          {% if form_errors(form.imageFile) %}
+            <p id="displayVich" style="padding-top: 68px;"></p>
+          {% else %}
+            <p id="displayVich"></p>
+          {% endif %}     
           {{ form_row(form.imageFile) }}
+          {{ form_row(form.hasAgreedPhoto) }}
           <button class="btn btn-lg btn-primary mt-2">Ajouter</button>
         {{ form_end(form) }}
 

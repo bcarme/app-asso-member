@@ -2,16 +2,18 @@
 
 namespace App\Form;
 
-use App\Entity\Worker;
+use App\Entity\Member;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class WorkerType extends AbstractType
+class MemberWorkerType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -22,6 +24,10 @@ class WorkerType extends AbstractType
         ->add('lastname', TextType::class, [
             'label' => 'Nom',
         ])
+        ->add('dateOfBirth', BirthdayType::class, [
+            'label' => 'Date de naissance',
+            'format' => 'ddMMMMyyyy',
+        ])
         ->add('email', EmailType::class, [
             'label' => 'Email',
         ])
@@ -31,13 +37,13 @@ class WorkerType extends AbstractType
         ->add('address', TextType::class, [
             'label' => 'Adresse',
         ])
-        ->add('zipCode', NumberType::class, [
+        ->add('cityCode', NumberType::class, [
             'label' => 'Code Postal',
         ])
         ->add('town', TextType::class, [
             'label' => 'Ville',
         ])
-        ->add('jobType', TextType::class, [
+        ->add('job', TextType::class, [
             'label' => 'Fonction',
         ])
         ->add('imageFile', VichImageType::class, [
@@ -47,13 +53,18 @@ class WorkerType extends AbstractType
             'image_uri' => true,
             'asset_helper' => true,
             'label' => 'Photo',
-                ]);
+                ])
+        ->add('hasAgreedPhoto', CheckboxType::class, [
+            'label' => "Autoriser à publier ma photo dans le trombinoscope",
+            'required'=>false,
+            'data'=> true,
+                ]);;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Worker::class,
+            'data_class' => Member::class,
         ]);
     }
 }
