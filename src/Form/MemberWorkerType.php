@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class MemberWorkerType extends AbstractType
@@ -52,7 +53,12 @@ class MemberWorkerType extends AbstractType
             'image_uri' => true,
             'asset_helper' => true,
             'label' => 'Photo',
-                ]);
+                ])
+        ->add('hasAgreedPhoto', CheckboxType::class, [
+            'label' => "Autoriser à publier ma photo dans le trombinoscope",
+            'required'=>false,
+            'data'=> true,
+                ]);;
     }
 
     public function configureOptions(OptionsResolver $resolver)

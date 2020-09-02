@@ -53,7 +53,8 @@ class MemberType extends AbstractType
                     ])
             ->add('hasAgreedPhoto', CheckboxType::class, [
                 'label' => "Autoriser à publier ma photo dans le trombinoscope",
-                'required'=>false
+                'required'=>false,
+                'data'=> true,
             ]);
                 
     }
