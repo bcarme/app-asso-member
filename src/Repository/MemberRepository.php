@@ -29,13 +29,30 @@ class MemberRepository extends ServiceEntityRepository
         
     }
 
-
     
     public function findByName($search)
     {
         $qb = $this->createQueryBuilder('m')
         ->where('m.firstname LIKE :search OR m.lastname LIKE :search')
         ->setParameter('search',  '%' . $search .'%')
+        ->getQuery();
+        return $qb->execute();
+        
+    }
+
+    public function findAllWorkers()
+    {
+        $qb = $this->createQueryBuilder('w')
+        ->andWhere('w.job != :null')->setParameter('null', serialize(null)) 
+        ->getQuery();
+        return $qb->execute();
+        
+    }
+
+    public function findAllMembers()
+    {
+        $qb = $this->createQueryBuilder('m')
+        ->andWhere('m.job = :null')->setParameter('null', serialize(null)) 
         ->getQuery();
         return $qb->execute();
         

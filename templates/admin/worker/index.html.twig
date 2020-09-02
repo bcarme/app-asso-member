@@ -11,6 +11,7 @@
             <tr>
                 <th>Photo</th>
                 <th>Prénom Nom</th>
+                <th>Date de Naissance</th>
                 <th>Email</th>
                 <th>Téléphone</th>
                 <th>Adresse</th>
@@ -23,10 +24,11 @@
             <tr>
                 <td><img class="img-crud-index" src="{{ vich_uploader_asset(worker, 'imageFile')}}" alt={{worker.firstname}} {{worker.lastname}} ></td>
                 <td>{{ worker.firstname }} {{ worker.lastname }}</td>
+                 <td>{{ worker.dateOfBirth|date('d/m/Y') }}</td>
                 <td>{{ worker.email }}</td>
                 <td>{{ worker.phone }}</td>
-                <td>{{ worker.address }}, {{ worker.zipcode }} {{ worker.town }}</td>
-                <td>{{ worker.jobtype }}</td>
+                <td>{{ worker.address }}, {{ worker.cityCode }} {{ worker.town }}</td>
+                <td>{{ worker.job }}</td>
                 <td "d-flex pt-3">
                     <a href="{{ path('worker_edit', {'id': worker.id}) }}" class="btn btn-success mr-4">Éditer<i
                                 class="fas fa-pen ml-1"></i></a>

@@ -2,9 +2,9 @@
 
 namespace App\Controller\admin;
 
-use App\Entity\Worker;
-use App\Form\WorkerType;
-use App\Repository\WorkerRepository;
+use App\Entity\Member;
+use App\Form\MemberWorkerType;
+use App\Repository\MemberRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +18,10 @@ class WorkerController extends AbstractController
     /**
      * @Route("/", name="worker_index", methods={"GET"})
      */
-    public function index(WorkerRepository $workerRepository): Response
+    public function index(memberRepository $memberRepository): Response
     {
         return $this->render('admin/worker/index.html.twig', [
-            'workers' => $workerRepository->findAll(),
+            'workers' => $memberRepository->findAllWorkers(),
         ]);
     }
 
@@ -30,8 +30,8 @@ class WorkerController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $worker = new Worker();
-        $form = $this->createForm(WorkerType::class, $worker);
+        $worker = new Member();
+        $form = $this->createForm(MemberWorkerType::class, $worker);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,7 +51,7 @@ class WorkerController extends AbstractController
     /**
      * @Route("/{id}", name="worker_show", methods={"GET"})
      */
-    public function show(Worker $worker): Response
+    public function show(Member $worker): Response
     {
         return $this->render('admin/worker/show.html.twig', [
             'worker' => $worker,
@@ -61,9 +61,9 @@ class WorkerController extends AbstractController
     /**
      * @Route("/{id}/editer", name="worker_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Worker $worker): Response
+    public function edit(Request $request, Member $worker): Response
     {
-        $form = $this->createForm(WorkerType::class, $worker);
+        $form = $this->createForm(MemberWorkerType::class, $worker);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -81,7 +81,7 @@ class WorkerController extends AbstractController
     /**
      * @Route("/{id}", name="worker_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Worker $worker): Response
+    public function delete(Request $request, Member $worker): Response
     {
         if ($this->isCsrfTokenValid('delete'.$worker->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

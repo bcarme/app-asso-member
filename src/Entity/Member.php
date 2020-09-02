@@ -144,6 +144,11 @@ class Member
      */
     private $registrations;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $job;
+
     public function __construct()
     {
         $this->giver = new ArrayCollection();
@@ -457,5 +462,17 @@ class Member
         $difference = $now->diff($age);
 
         return $difference->format('%y ans');
+    }
+
+    public function getJob(): ?string
+    {
+        return $this->job;
+    }
+
+    public function setJob(?string $job): self
+    {
+        $this->job = $job;
+
+        return $this;
     }
 }
