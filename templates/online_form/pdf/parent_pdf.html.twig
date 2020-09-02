@@ -23,13 +23,6 @@
             <p>- j’autorise mon enfant à participer aux diverses manifestations organisées au sein de la section du
                 CLUB SPORTIF TEST qui propose ces activités.</p>
 
-            {% if online_form.hasAgreedPhoto == true %}
-                <p>- j’accepte que le CLUB SPORTIF TEST utilise des photographies de groupe prises lors des activités du Club sur lesquelles pourrait figurer mon enfant.</p>
-            {% else %}
-                <p>- je n’accepte pas que le CLUB SPORTIF TEST utilise des photographies de groupe prises lors des
-                    activités du Club sur lesquelles pourrait figurer mon enfant.</p>
-            {% endif %}
-
             {% if online_form.hasAgreedTransportation == true %}
                 <p>- j’autorise mon enfant à effectuer les déplacements avec les responsables du club et les parents accompagnateurs en
                     voitures particulières, et m’engage également à effectuer au minimum un déplacement au cours de la
@@ -50,8 +43,13 @@
                 présent (un retard est toujours possible), il est nécessaire d’attendre son arrivée. Les enfants ne doivent
                 pas rester sans surveillance.</p>
 
-            <p>Le
-                {{ online_form.date|format_datetime('full', 'none', locale='fr') }}</p>
+            {% if online_form.hasAgreedConduct == true %}
+                <p>- j'ai lu et j'accepte la charte de bonne conduite.</p>
+            {% else %}
+                <p>- Je n'accepte pas la bonne de charte conduite.</p>
+            {% endif %}
+
+            <p>Le{{ online_form.date|format_datetime('full', 'none', locale='fr') }}</p>
 
             <p>Signature</p>
             <img src="{{ absolute_url(vich_uploader_asset(online_form, 'imageFile')) }}" style="width:150px;" alt="{{ online_form.imageName }}">

@@ -144,11 +144,6 @@ class Member
      */
     private $registrations;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Conduct::class, mappedBy="member", cascade={"persist", "remove"})
-     */
-    private $conduct;
-
     public function __construct()
     {
         $this->giver = new ArrayCollection();
@@ -462,22 +457,5 @@ class Member
         $difference = $now->diff($age);
 
         return $difference->format('%y ans');
-    }
-
-    public function getConduct(): ?Conduct
-    {
-        return $this->conduct;
-    }
-
-    public function setConduct(Conduct $conduct): self
-    {
-        $this->conduct = $conduct;
-
-        // set the owning side of the relation if necessary
-        if ($conduct->getMember() !== $this) {
-            $conduct->setMember($this);
-        }
-
-        return $this;
     }
 }

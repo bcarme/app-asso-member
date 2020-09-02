@@ -47,7 +47,7 @@
                                 {% for online_form in online_forms %}
                                     {% if is_granted('SHOW', online_form) and member.id == online_form.member.id and member.age < 18%}
                                             <tr>
-                                                <td>Autorisation parentale {{online_form.member.fullname}}</td>
+                                                <td>Autorisation parentale</td>
                                                 <td>
                                                     <a href="{{ path('online_form_pdf', {'id': online_form.id}) }}" class="btn pdf">
                                                         PDF<i class="far fa-file-pdf ml-2"></i></a>
@@ -60,9 +60,9 @@
                                             </tr>
                                     {% elseif is_granted('SHOW', online_form) and member.id == online_form.member.id and member.age > 18 %}
                                             <tr>
-                                                <td>Droit à l'image {{online_form.member.fullname}}</td>
+                                                <td>Charte de bonne conduite</td>
                                                 <td>
-                                                    <a href="{{ path('image_form_pdf', {'id': online_form.id}) }}" class="btn pdf">
+                                                    <a href="{{ path('conduct_form_pdf', {'id': online_form.id}) }}" class="btn pdf">
                                                         PDF<i class="far fa-file-pdf ml-2"></i></a>
                                                 </td>
                                                 <td>
@@ -71,23 +71,6 @@
                                                     {% endif %}
                                                 </td>
                                             </tr>
-                                    {% endif %}
-                                {% endfor %}
-
-                                {% for conduct in conducts %}
-                                    {% if is_granted('SHOW', conduct) and member.id == conduct.member.id %}
-                                        <tr>
-                                            <td>Charte de bonne conduite</td>
-                                                <td>
-                                                    <a href="{{ path('conduct_show', {'id': conduct.id}) }}" class="btn pdf">
-                                                        PDF<i class="far fa-file-pdf ml-2"></i></a>
-                                                </td>
-                                            <td>
-                                                {% if is_granted('DELETE', conduct) %}
-                                                    {{ include('conduct/_delete_form.html.twig') }}
-                                                {% endif %}
-                                            </td>
-                                        </tr>
                                     {% endif %}
                                 {% endfor %}
                             </tbody>
@@ -106,16 +89,10 @@
                                         </td>
                                     {% else %}
                                         <td>
-                                            <a href="{{ path('online_form_image') }}" class="btn btn-success">
-                                                <i class="far fa-edit mr-2"></i>Droit à l'image</a>
-                                        </td>
+                                            <a href="{{ path('online_form_conduct') }}" class="btn btn-success">Charte de bonne conduite
+                                                <i class="far fa-edit ml-2"></i></a>
+                                            </td>
                                     {% endif %}
-                                </tr>
-                                <tr>
-                                <td>
-                                <a href="{{ path('conduct_new') }}" class="btn btn-success">Charte de bonne conduite
-                                    <i class="far fa-edit ml-2"></i></a>
-                                </td>
                                 </tr>
                             </tbody>
                         </table>

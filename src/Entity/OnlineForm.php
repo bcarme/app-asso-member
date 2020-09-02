@@ -31,14 +31,14 @@ class OnlineForm
     private $date;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
-    private $hasAgreedPhoto;
+    private $hasAgreedTransportation;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $hasAgreedTransportation;
+    private $hasAgreedConduct;
 
     public function getId(): ?int
     {
@@ -57,18 +57,6 @@ class OnlineForm
         return $this;
     }
 
-    public function getHasAgreedPhoto(): ?bool
-    {
-        return $this->hasAgreedPhoto;
-    }
-
-    public function setHasAgreedPhoto(bool $hasAgreedPhoto): self
-    {
-        $this->hasAgreedPhoto = $hasAgreedPhoto;
-
-        return $this;
-    }
-
     public function getHasAgreedTransportation(): ?bool
     {
         return $this->hasAgreedTransportation;
@@ -77,6 +65,18 @@ class OnlineForm
     public function setHasAgreedTransportation(bool $hasAgreedTransportation): self
     {
         $this->hasAgreedTransportation = $hasAgreedTransportation;
+
+        return $this;
+    }
+
+    public function getHasAgreedConduct(): ?bool
+    {
+        return $this->hasAgreedConduct;
+    }
+
+    public function setHasAgreedConduct(bool $hasAgreedConduct): self
+    {
+        $this->hasAgreedConduct = $hasAgreedConduct;
 
         return $this;
     }

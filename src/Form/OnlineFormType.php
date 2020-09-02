@@ -35,8 +35,8 @@ class OnlineFormType extends AbstractType
             ->add('date', DateType::class, [
                 'widget' => 'single_text'
             ])
-            ->add('hasAgreedPhoto', ChoiceType::class, [
-                'label' => 'Droit à l\'image',
+            ->add('hasAgreedConduct', ChoiceType::class, [
+                'label' => 'J\'ai lu et j\'accepte la charte de bonne conduite',
                 'choices'  => [
                     'Oui' => true,
                     'Non' => false,

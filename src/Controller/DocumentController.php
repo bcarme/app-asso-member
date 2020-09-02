@@ -30,7 +30,6 @@ class DocumentController extends AbstractController
         DocumentRepository $documentRepository, 
         OnlineFormRepository $onlineFormRepository,
         ReportRepository $reportRepository ,
-        ConductRepository $conductRepository ,
         Request $request 
         ): Response
     {
@@ -54,7 +53,6 @@ class DocumentController extends AbstractController
             'members' => $memberRepository->findAll(),
             'online_forms' => $onlineFormRepository->findAll(),
             'reports' => $reportRepository->findById(),
-            'conducts' => $conductRepository->findAll(),
         ]);
     }
 

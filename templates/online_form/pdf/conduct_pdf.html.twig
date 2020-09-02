@@ -8,12 +8,13 @@
         <h4 class="text-center m-5">CHARTE DE BONNE CONDUITE</h4>
         <div class="m-5">
             <p>Je soussigné(e):
-                {{ conduct.member.fullname }}</p>
+                {{ online_form.member.fullname }}</p>
             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis natus voluptas amet in nulla fugit culpa? Dolorum quidem distinctio, consectetur voluptatum totam soluta aspernatur recusandae. Hic ullam quod dignissimos distinctio!</p>
+            <p>{{ online_form.hasAgreedConduct ? 'J\'ai lu et j\'accepte la charte de bonne conduite':'Je n\'accepte pas la bonne de charte conduite'}}</p>
             <p>Le
-                {{ conduct.date|format_datetime('full', 'none', locale='fr') }}</p>
+                {{ online_form.date|format_datetime('full', 'none', locale='fr') }}</p>
             <p>Signature</p>
-            <img src="{{ absolute_url(vich_uploader_asset(conduct, 'imageFile')) }}" alt="{{ conduct.imageName }}" style="width:150px;">
+            <img src="{{ absolute_url(vich_uploader_asset(online_form, 'imageFile')) }}" alt="{{ online_form.imageName }}" style="width:150px;">
         </div>
     </body>
 </html>
