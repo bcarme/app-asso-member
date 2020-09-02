@@ -43,7 +43,8 @@ class MemberRepository extends ServiceEntityRepository
     public function findAllWorkers()
     {
         $qb = $this->createQueryBuilder('w')
-        ->andWhere('w.job != :null')->setParameter('null', serialize(null)) 
+        ->andWhere('w.job != :null')
+        ->setParameter('null', serialize(null)) 
         ->getQuery();
         return $qb->execute();
         
