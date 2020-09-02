@@ -36,6 +36,7 @@ class WorkerController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $worker->setUser($this->getUser());
             $entityManager->persist($worker);
             $entityManager->flush();
 
