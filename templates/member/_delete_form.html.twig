@@ -1,5 +1,5 @@
 <form method="post" action="{{ path('member_delete', {'id': member.id}) }}" onsubmit="return confirm('Voulez-vous supprimer cet adhérent ?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ member.id) }}">
-    <button class="btn btn-danger">Supprimer</button>
+    <button class="btn btn-danger mt-3">Supprimer</button>
 </form>

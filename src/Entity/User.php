@@ -95,11 +95,6 @@ class User implements UserInterface
      */
     private $onlineForms;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Worker::class, mappedBy="user")
-     */
-    private $workers;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -326,34 +321,4 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Worker[]
-     */
-    public function getWorkers(): Collection
-    {
-        return $this->workers;
-    }
-
-    public function addWorker(Worker $worker): self
-    {
-        if (!$this->workers->contains($worker)) {
-            $this->workers[] = $worker;
-            $worker->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWorker(Worker $worker): self
-    {
-        if ($this->workers->contains($worker)) {
-            $this->workers->removeElement($worker);
-            // set the owning side to null (unless already changed)
-            if ($worker->getUser() === $this) {
-                $worker->setUser(null);
-            }
-        }
-
-        return $this;
-    }
 }
