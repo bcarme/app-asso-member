@@ -1,0 +1,36 @@
+{% extends 'layoutAdmin.html.twig' %}
+
+{% block title %}Liste des adhérents{% endblock %}
+
+{% block body %}
+ <div class="container-fluid p-5">
+    <h1>Liste des adhérents</h1>
+      <table class="table table-striped mt-5">
+        <thead class="thead-dark">
+            <tr>
+                <th>Photo</th>
+                <th>Prénom Nom</th>
+                <th>Date de Naissance</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+                <th>Adresse</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for member in members %}
+            <tr>
+                <td><img class="img-crud-index" src="{{ vich_uploader_asset(member, 'imageFile')}}" alt={{member.firstname}} {{member.lastname}} ></td>
+                <td>{{ member.firstname }} {{ member.lastname }}</td>
+                 <td>{{ member.dateOfBirth|date('d/m/Y') }}</td>
+                <td>{{ member.email }}</td>
+                <td>{{ member.phone }}</td>
+                <td>{{ member.address }}, {{ member.cityCode }} {{ member.town }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">aucun collaborateur trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -4,14 +4,13 @@
 
 <div class="container-fluid p-0">
    <div class="row no-gutters">
-        <header class="col-lg-2 navbar sidenav justify-content-center p-0">
+        <header class="col-lg-2 order-1 navbar sidenav p-0">
             {% block header %}{% include '_navadmin.html.twig' %}{% endblock %}
         </header>
-        <main class="col-10 heightMain">
+        <main class="col-10 order-2 heightMain">
             {% include '_flash_message.html.twig' %}
             {% block body %}{% endblock %}
         </main>
     </div>
 </div>
 {% endblock %}
-
