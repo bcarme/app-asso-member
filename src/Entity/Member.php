@@ -144,6 +144,16 @@ class Member
      */
     private $registrations;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $job;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $hasAgreedPhoto;
+
     public function __construct()
     {
         $this->giver = new ArrayCollection();
@@ -456,6 +466,30 @@ class Member
         $age = $this->getDateOfBirth();
         $difference = $now->diff($age);
 
-        return $difference->format('%y ans');
+        return $difference->format('%y');
+    }
+
+    public function getJob(): ?string
+    {
+        return $this->job;
+    }
+
+    public function setJob(?string $job): self
+    {
+        $this->job = $job;
+
+        return $this;
+    }
+
+    public function getHasAgreedPhoto(): ?bool
+    {
+        return $this->hasAgreedPhoto;
+    }
+
+    public function setHasAgreedPhoto(bool $hasAgreedPhoto): self
+    {
+        $this->hasAgreedPhoto = $hasAgreedPhoto;
+
+        return $this;
     }
 }
