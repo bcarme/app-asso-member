@@ -1,4 +1,4 @@
-<div class="sidemenu">
+<div class="sidemenu sticky-top">
     {% if is_granted('ROLE_SUPER_ADMIN') %}
         <ul>
             <li>
@@ -6,7 +6,7 @@
             </li>
     {% endif %}
             <li>
-                <a href="#">Adhérents</a>
+                <a href="{{ path('admin_members' ) }}">Adhérents</a>
             </li>
             <li>
                 <a href="{{ path('worker_index' ) }}">Collaborateurs</a>

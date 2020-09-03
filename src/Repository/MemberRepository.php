@@ -45,6 +45,7 @@ class MemberRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('w')
         ->andWhere('w.job != :null')
         ->setParameter('null', serialize(null)) 
+        ->add('orderBy', ['w.lastname ASC, w.firstname ASC'])
         ->getQuery();
         return $qb->execute();
         
@@ -54,6 +55,7 @@ class MemberRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('m')
         ->where('m.job is NULL')
+        ->add('orderBy', ['m.lastname ASC, m.firstname ASC'])
         ->getQuery();
         return $qb->execute();
         
