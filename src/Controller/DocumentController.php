@@ -7,6 +7,7 @@ use App\Entity\Document;
 use App\Form\DocumentType;
 use App\Repository\MemberRepository;
 use App\Repository\ReportRepository;
+use App\Repository\ConductRepository;
 use App\Repository\DocumentRepository;
 use App\Repository\OnlineFormRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,7 +52,7 @@ class DocumentController extends AbstractController
             'form' => $form->createView(),
             'members' => $memberRepository->findAll(),
             'online_forms' => $onlineFormRepository->findAll(),
-            'reports' => $reportRepository->findById(),
+            'reports' => $reportRepository->findAll(),
         ]);
     }
 

@@ -12,8 +12,6 @@
         {{ form_row(form.member) }}
         <p>- j’autorise mon enfant à participer aux diverses manifestations organisées au sein de la section du
                 CLUB SPORTIF TEST qui propose ces activités.</p>
-        <p>- j’accepte/ je n'accepte pas que le CLUB SPORTIF TEST utilise des photographies de groupe prises lors des activités du Club sur lesquelles pourrait figurer mon enfant.</p>
-        {{ form_row(form.hasAgreedPhoto) }}
         <p>- j’autorise/ je n'autorise pas mon enfant à effectuer les déplacements avec les responsables du club et les parents accompagnateurs en
                 voitures particulières, et m’engage également à effectuer au minimum un déplacement au cours de la
                 saison.</p>
@@ -26,6 +24,7 @@
         <p>- si, au début d’un entraînement ou lors d’un rendez-vous pour un match, le responsable n’est pas
                 présent (un retard est toujours possible), il est nécessaire d’attendre son arrivée. Les enfants ne doivent
                 pas rester sans surveillance.</p>
+        {{ form_row(form.hasAgreedConduct) }}
         {{ form_row(form.date) }}
             {% if form_errors(form.imageFile) %}
                 <p id="displayVich" style="padding-top: 68px;"></p>

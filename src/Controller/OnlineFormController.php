@@ -6,7 +6,7 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Entity\OnlineForm;
 use App\Form\OnlineFormType;
-use App\Form\OnlineImageFormType;
+use App\Form\ConductType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,25 +44,25 @@ class OnlineFormController extends AbstractController
     }
 
     /**
-     * @Route("/creer/droit-image", name="online_form_image", methods={"GET","POST"})
+     * @Route("/signer/charte", name="online_form_conduct", methods={"GET","POST"})
      */
-    public function newImageRight(Request $request): Response
+    public function newConduct(Request $request): Response
     {
-        $onlineForm = new OnlineForm();
-        $form = $this->createForm(OnlineImageFormType::class, $onlineForm);
+        $conduct = new OnlineForm();
+        $form = $this->createForm(ConductType::class, $conduct);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $onlineForm->setUser($this->getUser());
-            $entityManager->persist($onlineForm);
+            $conduct->setUser($this->getUser());
+            $entityManager->persist($conduct);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_document');
         }
 
-        return $this->render('online_form/new_image_right.html.twig', [
-            'online_form' => $onlineForm,
+        return $this->render('online_form/new_conduct.html.twig', [
+            'conduct' => $conduct,
             'form' => $form->createView(),
         ]);
     }
@@ -72,6 +72,8 @@ class OnlineFormController extends AbstractController
      */
     public function generatePdf(OnlineForm $onlineForm): Response
     {
+        $this->denyAccessUnlessGranted('SHOW', $onlineForm);
+
         $pdfOptions = new Options();
         $pdfOptions->set('isRemoteEnabled', true);
         $dompdf = new Dompdf($pdfOptions);
@@ -91,25 +93,23 @@ class OnlineFormController extends AbstractController
     }
 
     /**
-     * @Route("/pdf/droit-image/{id}", name="image_form_pdf", methods={"GET"})
+     * @Route("/pdf/charte/{id}", name="conduct_form_pdf", methods={"GET"})
      */
-    public function generateImagePdf(OnlineForm $onlineForm): Response
+    public function generateConductPdf(OnlineForm $onlineForm)
     {
+        $this->denyAccessUnlessGranted('SHOW', $onlineForm);
+
         $pdfOptions = new Options();
         $pdfOptions->set('isRemoteEnabled', true);
         $dompdf = new Dompdf($pdfOptions);
-        $html = $this->renderView('online_form/pdf/image_right_pdf.html.twig', [
+        $html = $this->renderView('online_form/pdf/conduct_pdf.html.twig', [
             'online_form' => $onlineForm,
         ]);
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $dompdf->stream("droit image.pdf", [
+        $dompdf->stream("charte_bonne_conduite.pdf", [
             "Attachment" => false
-        ]);
-
-        return $this->render('online_form/show.html.twig', [
-            'online_form' => $onlineForm,
         ]);
     }
 

@@ -14,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class OnlineFormType extends AbstractType
 {
@@ -35,12 +36,10 @@ class OnlineFormType extends AbstractType
             ->add('date', DateType::class, [
                 'widget' => 'single_text'
             ])
-            ->add('hasAgreedPhoto', ChoiceType::class, [
-                'label' => 'Droit à l\'image',
-                'choices'  => [
-                    'Oui' => true,
-                    'Non' => false,
-                ],
+            ->add('hasAgreedConduct', CheckboxType::class, [
+                'label' => "J'ai lu et j'accepte la charte de bonne conduite",
+                'required'=>true,
+                'data'=> true,
             ])
             ->add('hasAgreedTransportation', ChoiceType::class, [
                 'label' => 'Déplacement',

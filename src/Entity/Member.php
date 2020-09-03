@@ -135,12 +135,12 @@ class Member
     private $receiver;
 
     /**
-     * @ORM\OneToMany(targetEntity=Document::class, mappedBy="member")
+     * @ORM\OneToMany(targetEntity=Document::class, mappedBy="member", cascade={"persist", "remove"})
      */
     private $documents;
 
     /**
-     * @ORM\OneToMany(targetEntity=Registration::class, mappedBy="member")
+     * @ORM\OneToMany(targetEntity=Registration::class, mappedBy="member", cascade={"persist", "remove"})
      */
     private $registrations;
 

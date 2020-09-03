@@ -12,10 +12,9 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-class OnlineImageFormType extends AbstractType
+class ConductType extends AbstractType
 {
     public function __construct(Security $security)
     {
@@ -26,15 +25,13 @@ class OnlineImageFormType extends AbstractType
     {
         $user = $this->security->getUser();
         $builder
+            ->add('hasAgreedConduct', CheckboxType::class, [
+                'label' => "J'ai lu et j'accepte la charte de bonne conduite",
+                'required'=>true,
+                'data'=> true,
+            ])
             ->add('date', DateType::class, [
                 'widget' => 'single_text'
-            ])
-            ->add('hasAgreedPhoto', ChoiceType::class, [
-                'label' => 'Droit à l\'image',
-                'choices'  => [
-                    'Oui' => true,
-                    'Non' => false,
-                ],
             ])
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
