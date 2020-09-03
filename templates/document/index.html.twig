@@ -7,14 +7,9 @@
     <div class="container-fluid p-5">
         <h1>Mes documents</h1>
         <div class="row">
-<div class="col-4">
-        {{ include('document/_form.html.twig') }}
-
-</div>
-<div class="col-6 offset-2">
-        {{ include('document/_report.html.twig') }}
-
-</div>
+            <div class="col-4">
+                    {{ include('document/_form.html.twig') }}
+            </div>   
         </div>
 
         {% for member in members %}
@@ -84,8 +79,8 @@
                                 <tr>
                                     {% if member.age < 18 %}
                                         <td>
-                                            <a href="{{ path('online_form_new') }}" class="btn btn-primary">
-                                                <i class="far fa-edit mr-2"></i>L'autorisation parentale</a>
+                                            <a href="{{ path('online_form_new') }}" class="btn btn-primary">L'autorisation parentale
+                                                <i class="far fa-edit ml-2"></i></a>
                                         </td>
                                     {% else %}
                                         <td>
@@ -101,6 +96,17 @@
                 </div>
             {% endif %}
         {% endfor %}
+
+        <h2 class="my-5">Consulter les documents du club</h2>
+        <div class="row">
+            {% for report in reports %}
+                <div class="col-2">
+                    <a href="{{ path('document_report_show', {'id': report.id}) }}" class="btn pdf my-1">
+                        {{ report.title }}<i class="far fa-file-pdf ml-2"></i>
+                    </a>               
+                </div>  
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
 

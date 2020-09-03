@@ -12,7 +12,7 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class ConductType extends AbstractType
 {
@@ -25,12 +25,10 @@ class ConductType extends AbstractType
     {
         $user = $this->security->getUser();
         $builder
-            ->add('hasAgreedConduct', ChoiceType::class, [
-                'label' => 'J\'accepte la charte de bonne conduite',
-                'choices'  => [
-                    'Oui' => true,
-                    'Non' => false,
-                ],
+            ->add('hasAgreedConduct', CheckboxType::class, [
+                'label' => "J'ai lu et j'accepte la charte de bonne conduite",
+                'required'=>true,
+                'data'=> true,
             ])
             ->add('date', DateType::class, [
                 'widget' => 'single_text'

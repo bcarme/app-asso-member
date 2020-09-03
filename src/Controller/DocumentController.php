@@ -52,7 +52,7 @@ class DocumentController extends AbstractController
             'form' => $form->createView(),
             'members' => $memberRepository->findAll(),
             'online_forms' => $onlineFormRepository->findAll(),
-            'reports' => $reportRepository->findById(),
+            'reports' => $reportRepository->findAll(),
         ]);
     }
 
